@@ -1,5 +1,3 @@
-// doubleemplate de arreglo dinamico
-
 #ifndef RANGE_H
 #define RANGE_H
 
