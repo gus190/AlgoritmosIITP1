@@ -4,18 +4,21 @@
 
 using namespace std;
 
-//Constructores y destructor
-Range::Range(){
+//-- Constructors / Destructor --
+Range::Range(){ 
+//empty constructor
 	min_ = 0;
 	max_ = 0;
 	empty_ = true;
 }
-Range::Range(const Range& range){
+Range::Range(const Range& range){ 
+// copy constructor
 	min_ = range.min_;
 	max_ = range.min_;
 	empty_ = range.empty_;
 } 
-Range::Range(const size_t& min,const size_t& max){
+Range::Range(const size_t& min,const size_t& max){ 
+// range constructor
 	min_ = min;
 	max_ = max;
 	if(min_ < max_)
@@ -23,77 +26,85 @@ Range::Range(const size_t& min,const size_t& max){
 	else
 		empty_ = true;
 } 
-Range::~Range(){
+Range::~Range(){ 
+// destructor
 }
 
-//metodos
-void Range::clear(){
+//-- Metods --
+void Range::clear(){ 
+//clear range
 	min_ = 0;
 	max_ = 0;
 	empty_ = true;
 } 
-bool Range::empty()const{
+bool Range::empty()const{ 
+// is empty?
 	return empty_;
 }
-size_t Range::min()const{
+size_t Range::min()const{ 
+// get min
 	return min_;
 }
-size_t Range::max()const{
+size_t Range::max()const{ 
+// get max
 	return max_;
 }
-void Range::setRange(const size_t& min,const size_t& max){
+void Range::setRange(const size_t& min,const size_t& max){ 
+//set range from min max
 	min_ = min;
 	max_ = max;
-	if(min_ < max_)
+	if(min_ < max_){
 		empty_ = false;
-	else
+	}else{
 		empty_ = true;
+	}
 }
-void Range::setMin(const size_t& min){
+void Range::setMin(const size_t& min){ 
+// set min
 	min_ = min;
-	if(min_ < max_)
+	if(min_ < max_){
 		empty_ = false;
-	else
+	}else{
 		empty_ = true;
+	}
 }
-void Range::setMax(const size_t& max){
+void Range::setMax(const size_t& max){ 
+// set max
 	max_ = max;
-	if(min_ < max_)
+	if(min_ < max_){
 		empty_ = false;
-	else
+	}else{
 		empty_ = true;
+	}
 }
 
-	bool Range::isInside(const Range& range)const{
-		// [min_,max_)  is inside [range.min_,range.max) ?
-		if(min_ >= range.min_ && min_ < range.max_)
-			if(max_ <= range.max_ && max_ > range.min_)
-				return true;
-		return false;
-	}
-	bool Range::intersects(const Range& range){
-		// [min_,max_)  intersects [range.min_,range.max) ?
-		if(min_ < range.max_ || max_ > range.min_)
+bool Range::isInside(const Range& range)const{ 
+//A inside B?
+	if(min_ >= range.min_ && min_ < range.max_)
+		if(max_ <= range.max_ && max_ > range.min_)
 			return true;
-		return false;
-	}
-	
-	Range& Range::intersection(const Range& range){
-		// [min_,max_) n [range.min_,range.max)
-		if(min_ <= range.min_)
-			min_ = range.min_;
-		if(max_ >= range.max_)
-			max_ = range.max_;
-		if(min_ < max_)
-			empty_ = false;
-		else
-			empty_ = true;
-		return *this;
-	}
-	Range& Range::symDifference(const Range&){
-		
-	}
-//Operaciones nativas
+	return false;
+}
+bool Range::intersects(const Range& range){ 
+//A intersects B?
+	if(min_ < range.max_ || max_ > range.min_)
+		return true;
+	return false;
+}
+
+Range& Range::intersection(const Range& range){
+// A intersection B
+	if(min_ <= range.min_)
+		min_ = range.min_;
+	if(max_ >= range.max_)
+		max_ = range.max_;
+	if(min_ < max_)
+		empty_ = false;
+	else
+		empty_ = true;
+	return *this;
+}
+//-- Native Operators --
 bool Range::operator==(const Range& range)const{
 	if(min_ == range.min_ && max_ == range.min_ && empty_ == range.empty()){
 		return true;
@@ -135,10 +146,11 @@ Range& Range::operator-(const Range& range){
 		this->clear();
 		empty_ = true;
 	return *this;
-}  
-
+} 
+ 
+//-- Stream operators -- 
 std::ostream& operator<<(std::ostream& os,const Range& range){
-	if(range.empty() == false){
+	if(range.empty() == true){
 		os << "Empty";
 	}else{
 		os << '[' << range.min_ << ',' << range.max_ << ')';

@@ -1,7 +1,7 @@
 // doubleemplate de arreglo dinamico
 
-#ifndef DAdoubleA_H
-#define DAdoubleA_H
+#ifndef RANGE_H
+#define RANGE_H
 
 #include <cstdlib>
 #include <iostream>
@@ -34,7 +34,6 @@ public:
 	bool intersects(const Range&);		// check if A n B != empty
 	
 	Range& intersection(const Range&);	// intersection
-	Range& symDifference(const Range&);	// symetric diference
 	
 	friend std::ostream& operator<<(std::ostream&,const Range&);
 	friend std::istream& operator>>(std::istream&,Range&);

@@ -23,6 +23,10 @@ datagen: datagen.o cmdline.o
 
 datagen.o: datagen.h cmdline.h
 	$(CXX) $(CXXFLAGS) -c datagen.cc
+test-range: test-range.o range.o
+	$(CXX) $(LDFLAGS) -o test-range test-range.o range.o
+test-range.o: test-range.cc
+	$(CXX) $(CXXFLAGS) -c test-range.cc
 	
 querygen: querygen.o cmdline.o
 	$(CXX) $(LDFLAGS) -o querygen querygen.o cmdline.o
@@ -31,4 +35,4 @@ querygen.o: querygen.h cmdline.h
 	$(CXX) $(CXXFLAGS) -c querygen.cc
 	
 clean:
-	rm -f *.o *.t datagen querygen tp0
+	rm -f *.o *.t datagen querygen tp0 test-range
