@@ -14,7 +14,7 @@ Range::Range(){
 Range::Range(const Range& range){ 
 // copy constructor
 	min_ = range.min_;
-	max_ = range.min_;
+	max_ = range.max_;
 	empty_ = range.empty_;
 } 
 Range::Range(const size_t& min,const size_t& max){ 

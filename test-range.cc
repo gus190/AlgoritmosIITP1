@@ -19,8 +19,8 @@ int main(){
 					aux = A;
 					cout << aux;
 			}else{
-				A.clear();
-				cout << "Bad range parse . "<< rgmin << A << endl;
+				cout << "Bad range parse. ex.:A,0,20" << endl;
+				cout << "Where input is <rng>,<minrg>,<maxrg>";
 			}
 			cout << endl;
 			break;
@@ -28,11 +28,9 @@ int main(){
 			if(cin>>ch && ch==',' && cin>>rgmin && cin>>ch && ch==',' &&
 				cin>>rgmax){
 				B.setRange(rgmin,rgmax);
-				aux = B;
-				cout << aux;
 			}else{
-				B.clear();
-				cout << "Bad range parse. "  << B << endl;
+				cout << "Bad range parse. ex.:A,0,20" << endl;
+				cout << "Where input is <rng>,<minrg>,<maxrg>";
 			}
 			cout << endl;
 			break;
@@ -75,13 +73,17 @@ int main(){
 			cout << "Ac=B? " << A.isInside(B);
 			cout << endl;
 			break;
-		case 'P':
-			// print
-			cout << "A:" << A << ",B:" << B;
+		case 'P': // print
+			if(cin >> ch && ch == 'A'){
+				cout << A;
+			}else if(ch == 'B'){
+				cout << B;
+			}else {
+				cout << "bad parameter for Print P(A or B)";
+			}
 			cout << endl;
 			break;
-		case 'N':
-			// A intersects B?.
+		case 'N': // A intersects B?.
 			cout << "A intersects B?: " << A.intersects(B);
 			cout << endl;
 			break;

@@ -3,44 +3,45 @@
 
 #include <cstdlib>
 #include <iostream>
-//#include <string>
-#include <array.h>
+#include <Range.h>
+#include <Package.h>
 
 using namespace std;
 
-class Package {
+class Package{
 public:
-	Package();
-	Package(const Package&); //construcor copia
-	Package(const double &max, const double &min ,const double &avg,const size_t &count, const Range &rg); //constructor completo
-	Package(const double &max, const double &min ,const double &avg, const Range &rg); //constructor completo sin count
-	Package(const double &max, const double &min ,const double &avg,const sizet &count, const sizet &minrg, const sizet &maxrg);
-	Package(const Range &rg); //Por si creo primero la clase y despues cargo los datos
-	Package(const double &data,const Range &rg); //Para las hojas
-	Package(const double &data, const sizet &minrg, const sizet &maxrg);
-	Package(const Package&,const Package&); //para crear un padre
+	//constructors/destructors
+	Package(); // empty
+	Package(const Package&); //copy
+	Package(const double &max, const double &min ,const double &avg,const size_t &count, const Range &rg); //complete
+	Package(const Package&,const Package&); //for parent, analog to merge 2 pkg
+	Package(const double &data,const Range& rg); //for the leafs, data and index
 	~Package();
-	
+	//getters
 	double min() const;
 	double max() const;
 	double avg() const;
-	Range rg() const;
+	Range range() const;
 	size_t count() const;
-	void clear();//No existe todo en cero
 	bool exist() const;
-	void setExist(bool &exist);
+	//setters
+	void min(const double&);
+	void max(const double&);
+	void avg(const double&);
+	void range(const size_t&,const size_t&);
+	void range(const Range&);
+	void count(const size_t&);
+	void exist(const bool&);
+	//metods
+	void clear();//clear data and exist tfalse
 	Package& merge(const Package&);
 	Package& merge(const Package&,const Package&);
-	
-	void querry(ostream&,size_t,size_t);
-    
-
-	Package& operator+(const Package&);//A partir de dos hijos me crea el padre
-	Package& operator=(const Package&);
-	
+	//operators
+	Package& operator+(const Package&); //merge
+	Package& operator=(const Package&); //asignation
+	//stream operators
 	friend std::ostream& operator<<(std::ostream&,const Package&);
-	//friend std::istream& operator>>(std::istream&,Sensor&);
-
+	friend std::istream& operator>>(std::istream&,Package&);
 private:	
 	bool exist_;
 	Range rg_;
