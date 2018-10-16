@@ -6,94 +6,109 @@
 #include <Range.h>
 #include <Array.h>
 
-//constructors
-SegmentTree::SegmentTree(){ // empty
+//-- Constructors / Destructor -- 
+SegmentTree::SegmentTree(){ 
+	// Empty
 	exist_ = false;
 }
-SegmentTree::SegmentTree(const SegmentTree& st):st_(st.st_){ // copy
+SegmentTree::SegmentTree(const SegmentTree& st):st_(st.st_){ 
+	// Copy
 	exist_ = st.exist_;
-	size_ = st.size_;
-	nodes_ = st.nodes_;
+	lSize_ = st.lSize_;
+	nSize_ = st.nSize_;
 	height_ = st.height_;
 }
-SegmentTree::SegmentTree(const Array<Package>& arr){ // from array
-	// if arr empty, no st
+SegmentTree::SegmentTree(const Array<Package>& arr){ 
+	// From array
 	if (arr.size() == 0){ 
 		exist_ = false;
 		return;
 	}
+	exist_ = true;
 	
-	//set variables
+	// Set variables
 	height_ = (size_t)(ceil(log2(arr.size()))); //height of the tree
-	size_ = (size_t)(pow(2,height_));	// total size of the tree
-	nodes_ = 2*size_-1;		//number of nodes
+	lSize_ = (size_t)(pow(2,height_));	// total size of the tree
+	nSize_ = 2*lSize_-1;		//number of nodes
 	
-	cout << size_ << ',' << nodes_ << ',' << height_ << endl;
-	// create the array for the st
-	Array<Package> aux(nodes_); 
+	// Create the array for the st
+	Array<Package> aux(nSize_); 
 	st_ = aux;
 	
-	//load array in last part of array st
-	for(size_t i = nodes_-arr.size(); i<nodes_; i++){
-		st_[i] = arr[i-nodes_+arr.size()];
+	// Load array in last part of st
+	for(size_t i = 0; i<arr.size(); i++){ // copy the array in the right location
+		st_[i+nSize_-lSize_] = arr[i];
+	}
+	for(size_t i = arr.size();i<st_.size();i++){ // fill the final empty elements of array with their range
+		st_[i+nSize_-lSize_].range(i,i+1);
 	}
 	
-	//cout << st_;
-	
-	//build all the tree
+	// Build all the tree
 	this->build(0);
 }
 SegmentTree::~SegmentTree(){
+	// Destructor
 }
 
-//getters
+//-- Getters --
 size_t SegmentTree::size()const{
-	return size_;
+	return lSize_;
 }
 size_t SegmentTree::nodes()const{
-	return nodes_;
+	return nSize_;
 }
 bool SegmentTree::exist()const{
 	return exist_;
 }
 
-//setters
+//-- Setters --
 
-//metods
+// -- Metods -- 
 void SegmentTree::clear(){
+	// Clear
 	st_.clear();
 	exist_=false;
-	size_=0;
+	lSize_=0;
 	height_=0;
-	nodes_=0;
+	nSize_=0;
 }
-
-Package& SegmentTree::build(const size_t& node){ //create the tree from the leafs
-	if(haveChilds(node)){
-		st_[node] = build(2*node+1) + build(2*node+2);
-	} else {
-		return st_[node];
+Package& SegmentTree::build(const size_t& node){ 
+	// Create the tree from the leafs
+	// Recursive build, call until element with no childs,return node
+	if(haveChild(node)){
+		st_[node] = build(firstChild(node));
+		st_[node] + build(secondChild(node)); // merge childs in father
 	}
+	return st_[node];
 }
-
-bool SegmentTree::haveChilds(const size_t& node)const{
-	if(2*node+2 <= nodes_){ // if index 2*n+2 is in the array
+bool SegmentTree::haveChild(const size_t& node)const{
+	// Check if node have children
+	// If index 2*n+2 is in the array, then he have childs
+	if(2*node+2 <= nSize_){ 
 		return true;
 	}else{
 		return false;
 	}
 }
+size_t SegmentTree::firstChild(const size_t& node)const{
+	// Return index of 1st child
+	return 2*node+1;
+}
+size_t SegmentTree::secondChild(const size_t& node)const{
+	// Return index of 2nd child
+	return 2*node+2;
+}
 
-//operators
+//-- Operators --
 SegmentTree& SegmentTree::operator=(const SegmentTree& st){
 	exist_ = st.exist_;
 	height_ = st.height_;
-	nodes_ = st.nodes_;
+	nSize_ = st.nSize_;
 	st_ = st.st_;
 	return *this;
 }
 
-//stream operators
+// -- Stream operators -- 
 std::ostream & operator<< (std::ostream& os,const SegmentTree& st){
 	if(st.exist_ == false){
 		os << "empty st" << endl;

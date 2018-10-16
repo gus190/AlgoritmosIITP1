@@ -25,7 +25,7 @@ Package.o: Package.cc Package.h
 SegmentTree.o: SegmentTree.cc SegmentTree.h
 	$(CXX) $(CXXFLAGS) -c SegmentTree.cc
 	
-#test generators
+#test objects generators
 test-st: test-st.o SegmentTree.o Package.o Range.o
 	$(CXX) $(LDFLAGS) -o test-st test-st.o SegmentTree.o Package.o Range.o
 	

@@ -11,34 +11,37 @@ using namespace std;
 
 class SegmentTree{
 public:
-	//constructors/destructors
-	SegmentTree(); // empty
-	SegmentTree(const SegmentTree&); //copy
-	SegmentTree(const Array<Package>&); //from array of elements
-	~SegmentTree();
+	// Constructors / Destructor
+	SegmentTree(); // Empty
+	SegmentTree(const SegmentTree&); // Copy
+	SegmentTree(const Array<Package>&); // From array of elements
+	~SegmentTree(); // Destructor 
 	
-	//getters
+	// Getters
 	size_t size()const;
 	size_t nodes()const;
 	bool exist()const;
 	
-	//setters
+	// Setters
 	
-	//metods
+	// Metods
 	void clear();//clear
 	Package& build(const size_t&); //create all parent nodes
-	bool haveChilds(const size_t&)const;
-	
-	//operators
+	bool haveChild(const size_t&)const;
+	size_t firstChild(const size_t&)const;
+	size_t secondChild(const size_t&)const;
+
+	// Native operators
 	SegmentTree& operator=(const SegmentTree&); //asignation
 	
-	//stream operators
+	// Stream operators
 	friend std::ostream& operator<<(std::ostream&,const SegmentTree&);
 	friend std::istream& operator>>(std::istream&,SegmentTree&);
-private:	
+
+	private:	
 	bool exist_;
 	Array<Package> st_;
-	size_t size_,height_,nodes_;
+	size_t lSize_,height_,nSize_; //leaves size, height of the tree, nodes size(total size)
 };
 
 #endif

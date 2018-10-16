@@ -6,15 +6,17 @@
 #define INFPOS 1000000
 #define INFNEG -1000000
 
-//constructors
-Package::Package():rg_(){ // empty
+//-- Constructors / Destructor --
+Package::Package():rg_(){ 
+	// Empty
 	exist_ = false;
 	max_ = INFNEG;
 	min_ = INFPOS;
 	avg_ = 0;
 	count_ = 0;
 }
-Package::Package(const Package& pkg){ // copy
+Package::Package(const Package& pkg){ 
+	// Copy
 	exist_ = pkg.exist_;
 	max_ = pkg.max_;
 	min_ = pkg.min_;
@@ -22,9 +24,9 @@ Package::Package(const Package& pkg){ // copy
 	count_ = pkg.count_;
 	rg_ =  pkg.rg_;
 }
-Package::Package(const double &max, const double &min ,const double &avg,const size_t &count, const Range &rg) // complete
+Package::Package(const double &max, const double &min ,const double &avg,const size_t &count, const Range &rg) 
 				:rg_(rg){
-
+	// Complete
 	exist_ = true;
 	max_ = max;
 	min_ = min;
@@ -34,20 +36,23 @@ Package::Package(const double &max, const double &min ,const double &avg,const s
 		exist_ = false;
 	}
 }
-Package::Package(const double &data,const Range &rg):rg_(rg){ // leafs
+Package::Package(const double &data,const Range &rg):rg_(rg){ 
+	// Leafs
 	exist_ = true;
 	max_ = data;
 	min_ = data;
 	avg_ = data;
 	count_ = 1;
 }
-Package::Package(const Package &pkg1,const Package &pkg2){ // for parent (merge 2 pkg)
+Package::Package(const Package &pkg1,const Package &pkg2){ 
+	// Parents (merge 2 pkg)
 	*this = pkg1;
 	this->merge(pkg2);
 }
 Package::~Package(){
+	// Destructor
 }
-//getters
+//-- Getters --
 double Package::min()const{
 	return min_;
 }
@@ -66,7 +71,7 @@ size_t Package::count()const{
 bool Package::exist()const{
 	return exist_;
 }
-//setters
+//-- Setters --
 void Package::min(const double& data){
 	min_ = data;
 }
@@ -88,6 +93,23 @@ void Package::count(const size_t& data){
 void Package::exist(const bool& data){
 	exist_ = data;
 }
+void Package::set(const Range& rg,const double& data){ // Range and data with count 1;
+	rg_ = rg;
+	min_ = data;
+	max_ = data;
+	avg_ = data;
+	count_ = 1;
+	exist_ = true;
+}
+void Package::set(const size_t& minrg,const size_t& maxrg,const double& data){ // Range and data with count 1;
+	rg_.setRange(minrg,maxrg);
+	min_ = data;
+	max_ = data;
+	avg_ = data;
+	count_ = 1;
+	exist_ = true;
+}
+//-- Metods --
 void Package::clear(){
 	rg_.clear();
 	min_=0;
@@ -96,7 +118,6 @@ void Package::clear(){
 	avg_=0;
 	count_=0;
 }
-//metods
 Package& Package::merge(const Package &pkg){ //merge this with a pkg
 	//exist
 	exist_ = exist_ || pkg.exist_;
@@ -113,7 +134,7 @@ Package& Package::merge(const Package &pkg){ //merge this with a pkg
 		avg_=(avg_*count_ + pkg.avg_*pkg.count_)/(count_+pkg.count_);
 	}
 	//range
-	rg_ = rg_ + pkg.rg_; //union
+	rg_ + pkg.rg_; //union
 	//count
 	count_+=pkg.count_;
 }
@@ -122,7 +143,7 @@ Package& Package::merge(const Package& pkg1,const Package& pkg2){ // merge 2 pkg
 	this->merge(pkg2);
 	return *this;
 }
-//operators
+//-- Native operators --
 Package& Package::operator+(const Package& pkg){
 	this->merge(pkg);
 	return *this;
@@ -137,7 +158,7 @@ Package& Package::operator=(const Package& pkg){
 	return *this;
 }
 
-//stream operators
+//-- Stream operators -- 
 std::ostream & operator<< (std::ostream& os,const Package& pkg){
 	os << '{' << pkg.rg_ << ',';
 	if(!pkg.exist_){
@@ -149,7 +170,6 @@ std::ostream & operator<< (std::ostream& os,const Package& pkg){
 		os << pkg.avg_ << ','; 
 		os << pkg.count_ <<'}';
 	}
-	os << endl;
 	return os;
 }
 std::istream & operator >> (std::istream& is,Package& Package){

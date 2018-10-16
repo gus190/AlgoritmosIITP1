@@ -10,38 +10,46 @@ using namespace std;
 
 class Package{
 public:
-	//constructors/destructors
-	Package(); // empty
-	Package(const Package&); //copy
-	Package(const double &max, const double &min ,const double &avg,const size_t &count, const Range &rg); //complete
-	Package(const Package&,const Package&); //for parent, analog to merge 2 pkg
-	Package(const double &data,const Range& rg); //for the leafs, data and index
+	// Constructors / Destructors
+	Package(); // Empty
+	Package(const Package&); // Copy
+	Package(const double &max, const double &min ,const double &avg,const size_t &count, const Range &rg); // Complete
+	Package(const Package&,const Package&); // For parent, analog to merge 2 pkg
+	Package(const double &data,const Range& rg); // For the leafs, data and index
 	~Package();
-	//getters
+	
+	// Getters
 	double min() const;
 	double max() const;
 	double avg() const;
 	Range range() const;
 	size_t count() const;
 	bool exist() const;
-	//setters
+	
+	// Setters
 	void min(const double&);
 	void max(const double&);
 	void avg(const double&);
 	void range(const size_t&,const size_t&);
 	void range(const Range&);
 	void count(const size_t&);
+	void set(const Range&,const double&); // Range and data with count 1;
+	void set(const size_t&,const size_t&,const double&); // Range and data with count 1;
 	void exist(const bool&);
-	//metods
-	void clear();//clear data and exist tfalse
-	Package& merge(const Package&);
-	Package& merge(const Package&,const Package&);
-	//operators
-	Package& operator+(const Package&); //merge
-	Package& operator=(const Package&); //asignation
-	//stream operators
+	
+	// Metods
+	void clear();// Clear package
+	Package& merge(const Package&); // Merge 
+	Package& merge(const Package&,const Package&); // Merge 2 pkg in this
+	
+	// Native operators
+	Package& operator+(const Package&); // Merge
+	Package& operator=(const Package&); // Asignation
+	
+	// Stream operators
 	friend std::ostream& operator<<(std::ostream&,const Package&);
 	friend std::istream& operator>>(std::istream&,Package&);
+	
 private:	
 	bool exist_;
 	Range rg_;

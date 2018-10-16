@@ -212,6 +212,7 @@ std::ostream & operator<< (std::ostream& os,const Array<T> & arr)
 		os << "()";
 		return os;
 	}
+	
 	os << "(";
 
 	for(size_t i=0; i<arr.size()-1; ++i){
