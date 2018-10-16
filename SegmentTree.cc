@@ -17,39 +17,49 @@ SegmentTree::SegmentTree(const SegmentTree& st):st_(st.st_){ // copy
 	height_ = st.height_;
 }
 SegmentTree::SegmentTree(const Array<Package>& arr){ // from array
+	// if arr empty, no st
+	if (arr.size() == 0){ 
+		exist_ = false;
+		return;
+	}
 	
+	//set variables
+	height_ = (size_t)(ceil(log2(arr.size()))); //height of the tree
+	size_ = (size_t)(pow(2,height_));	// total size of the tree
+	nodes_ = 2*size_-1;		//number of nodes
+	
+	cout << size_ << ',' << nodes_ << ',' << height_ << endl;
+	// create the array for the st
+	Array<Package> aux(nodes_); 
+	st_ = aux;
+	
+	//load array in last part of array st
+	for(size_t i = nodes_-arr.size(); i<nodes_; i++){
+		st_[i] = arr[i-nodes_+arr.size()];
+	}
+	
+	//cout << st_;
+	
+	//build all the tree
+	this->build(0);
 }
 SegmentTree::~SegmentTree(){
 }
+
 //getters
 size_t SegmentTree::size()const{
 	return size_;
 }
+size_t SegmentTree::nodes()const{
+	return nodes_;
+}
 bool SegmentTree::exist()const{
 	return exist_;
 }
+
 //setters
-void SegmentTree::min(const double& data){
-	min_ = data;
-}
-void SegmentTree::max(const double& data){
-	max_ = data;
-}
-void SegmentTree::avg(const double& data){
-	avg_ = data;
-}
-void SegmentTree::range(const Range& data){
-	rg_ = data;
-}
-void SegmentTree::range(const size_t& minrg,const size_t& maxrg){
-	rg_.setRange(minrg,maxrg);
-}
-void SegmentTree::count(const size_t& data){
-	count_ = data;
-}
-void SegmentTree::exist(const bool& data){
-	exist_ = data;
-}
+
+//metods
 void SegmentTree::clear(){
 	st_.clear();
 	exist_=false;
@@ -57,50 +67,42 @@ void SegmentTree::clear(){
 	height_=0;
 	nodes_=0;
 }
-//metods
-SegmentTree& SegmentTree::create(const Array<Package>& arr){ //create st from array
-	Array<Package> aux;
-	if (arr.size() == 0){
-		exist_ = false;
-		return;
+
+Package& SegmentTree::build(const size_t& node){ //create the tree from the leafs
+	if(haveChilds(node)){
+		st_[node] = build(2*node+1) + build(2*node+2);
+	} else {
+		return st_[node];
 	}
-	height_ = (size_t)(ceil(log2(arr.size())));
-	size_ = (size_t)(pow(2,height_));
-	nodes_ = 2*size_-1;
-	
-	
 }
-SegmentTree& SegmentTree::merge(const SegmentTree& st1,const SegmentTree& st2){ // merge 2 st in this
-	*this = st1;
-	this->merge(st2);
-	return *this;
+
+bool SegmentTree::haveChilds(const size_t& node)const{
+	if(2*node+2 <= nodes_){ // if index 2*n+2 is in the array
+		return true;
+	}else{
+		return false;
+	}
 }
+
 //operators
-SegmentTree& SegmentTree::operator+(const SegmentTree& st){
-	this->merge(st);
-	return *this;
-}
 SegmentTree& SegmentTree::operator=(const SegmentTree& st){
 	exist_ = st.exist_;
-	max_ = st.max_;
-	min_ = st.min_;
-	avg_ = st.avg_;
-	count_ = st.count_;
-	rg_ =  st.rg_;
+	height_ = st.height_;
+	nodes_ = st.nodes_;
+	st_ = st.st_;
 	return *this;
 }
+
 //stream operators
 std::ostream & operator<< (std::ostream& os,const SegmentTree& st){
-	os << st.rg_ << ',';
-	if(!st.exist_){
-		os << "NoData";
+	if(st.exist_ == false){
+		os << "empty st" << endl;
+	}else{
+		os << st.st_ << endl;
 	}
-	else{
-		os << st.min_ << ',' << st.max_ << ',' << st.avg_ << ',' << st.count_; 
-	}
-	os << endl;
 	return os;
 }
+
 std::istream & operator >> (std::istream& is,SegmentTree& SegmentTree){
 	cout << " istream no implementado";
 	return is;

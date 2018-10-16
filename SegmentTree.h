@@ -19,17 +19,18 @@ public:
 	
 	//getters
 	size_t size()const;
+	size_t nodes()const;
 	bool exist()const;
 	
 	//setters
 	
 	//metods
 	void clear();//clear
-	void createST(const Array<Package>&); //create st from array
+	Package& build(const size_t&); //create all parent nodes
+	bool haveChilds(const size_t&)const;
 	
 	//operators
-	Package& operator=(const SegmentTree&); //asignation
-	Package& operator+(const SegmentTree&); //avg of leaf values and reconstruct of st
+	SegmentTree& operator=(const SegmentTree&); //asignation
 	
 	//stream operators
 	friend std::ostream& operator<<(std::ostream&,const SegmentTree&);

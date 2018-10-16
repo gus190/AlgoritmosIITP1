@@ -136,14 +136,18 @@ Package& Package::operator=(const Package& pkg){
 	rg_ =  pkg.rg_;
 	return *this;
 }
+
 //stream operators
 std::ostream & operator<< (std::ostream& os,const Package& pkg){
-	os << pkg.rg_ << ',';
+	os << '{' << pkg.rg_ << ',';
 	if(!pkg.exist_){
-		os << "NoData";
+	os << "NoData"  << '}';
 	}
 	else{
-		os << pkg.min_ << ',' << pkg.max_ << ',' << pkg.avg_ << ',' << pkg.count_; 
+		os << pkg.min_ << ',';
+		os << pkg.max_ << ',';
+		os << pkg.avg_ << ','; 
+		os << pkg.count_ <<'}';
 	}
 	os << endl;
 	return os;

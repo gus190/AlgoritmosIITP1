@@ -78,6 +78,13 @@ int main(){
 			cout << "Forma 3: suma usada como merge = "<< aux;
 			A = aux;
 			break;
+		default:
+			cout << "error: unknown command (";
+			cout << ch;
+			cout << ")";
+			cout << endl;
+			break;
+		}
 		}
 	}
 }
