@@ -6,8 +6,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <iostream>
-//#include <sstream>
-//#include <stdio.h>
+
 using namespace std;
 
 #define ARRAY_DEFAULT_SIZE 4

@@ -3,8 +3,8 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <Range.h>
-#include <Package.h>
+#include <classes/Range.h>
+#include <classes/Package.h>
 
 using namespace std;
 

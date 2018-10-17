@@ -3,9 +3,9 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <Range.h>
-#include <Package.h>
-#include <Array.h>
+#include <classes/Range.h>
+#include <classes/Package.h>
+#include <classes/Array.h>
 
 using namespace std;
 

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
-#include <Package.h>
-#include <Range.h>
+#include <classes/Package.h>
+#include <classes/Range.h>
 
 #define INFPOS 1000000
 #define INFNEG -1000000

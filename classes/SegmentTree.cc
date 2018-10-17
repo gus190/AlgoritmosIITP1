@@ -1,10 +1,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
-#include <SegmentTree.h>
-#include <Package.h>
-#include <Range.h>
-#include <Array.h>
+#include <classes/SegmentTree.h>
+#include <classes/Package.h>
+#include <classes/Range.h>
+#include <classes/Array.h>
 
 //-- Constructors / Destructor -- 
 SegmentTree::SegmentTree(){ 

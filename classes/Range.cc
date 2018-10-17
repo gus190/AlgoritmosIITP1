@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <iostream>
-#include<range.h>
+#include <classes/range.h>
 
 using namespace std;
 
@@ -90,10 +90,10 @@ bool Range::intersects(const Range& range){
 	if(min_ >= range.max_)
 		return false;
 	if(max_ <= range.min_)
-		return false
-	if(min_ < range.max_ && min >= range.min_)
+		return false;
+	if(min_ < range.max_ && min_ >= range.min_)
 		return true;
-	if(max_ > range.min_ && max <= range.max_)
+	if(max_ > range.min_ && max_ <= range.max_)
 		return true;
 	return false;
 }

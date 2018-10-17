@@ -1,6 +1,6 @@
-#include <Package.h>
-#include <Range.h>
-#include <SegmentTree.h>
+#include <classes/Package.h>
+#include <classes/Range.h>
+#include <classes/SegmentTree.h>
 #include <iostream>
 
 using namespace std;
