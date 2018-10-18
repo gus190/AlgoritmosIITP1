@@ -130,23 +130,24 @@
 	// ---- main ---- //
 	int main(int argc, char * const argv[]){
 		
-		//parseo de la entrada
+		// Input parse
 		cmdline cmdl(options);
 		cmdl.parse(argc, argv);
 		
-		//hago los query
+		// Query generation
 		for(size_t i = 0;i<samples;i++){
-			if(rand() % 100 >= randNodata){
-				*oss << "Sensor" << (rand() % number) << ',';
+			if(rand() % 100 >= randNodata){ // Random chance of no sensor ID (average)
+				*oss << "Sensor" << (rand() % number);
 			}
-			size_t min = (rand() % maxRange);
+			*oss << << ',';
+			size_t min = (rand() % maxRange); // Random min range from 0 to maxrange
 			*oss << min << ','; 
-			size_t max = (rand() % (maxRange - min)) + min;
+			size_t max = (rand() % (maxRange - min)) + min; // Random max range from min to maxrange
 			*oss << max;
 			*oss << endl;
 		}
 		
-		// casos especiales
+		// Special cases
 		*oss << "asfkhagflajsf"<< endl; // invalid input
 		*oss << " "	<< endl;			 // space
 		*oss << "asfa,0,5000"<< endl;	 // unknown ID

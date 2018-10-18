@@ -138,10 +138,11 @@
 	
 	// ---- main ---- //
 	int main(int argc, char * const argv[]){
-		//parseo de la entrada
+		// Input parse
 		cmdline cmdl(options);
 		cmdl.parse(argc, argv);
 		
+		// Sensor naming
 		for(size_t i = 0;i<number;i++){
 			if(i == 0){
 				*oss << "Sensor" << i;
@@ -150,6 +151,8 @@
 			}
 		}
 		*oss << endl;
+		
+		// Sample generator
 		for(size_t j=0;j<samples;j++){
 			for(size_t i=0;i<number;i++){
 				if(i == 0){
