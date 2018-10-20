@@ -20,9 +20,9 @@ public:
 	size_t max()const;
 	
 	// Setters
-	void setRange(const size_t&,const size_t&);
-	void setMin(const size_t&);
-	void setMax(const size_t&);
+	void range(const size_t&,const size_t&);
+	void min(const size_t&);
+	void max(const size_t&);
 	
 	// Native Operators
 	bool operator==(const Range&)const;  // A == B
@@ -32,9 +32,8 @@ public:
 	
 	// Metods
 	void clear();
-	bool isInside(const Range&)const;	// Check if A c= B
-	bool intersects(const Range&);		// Check if A n B != empty
-	Range& intersection(const Range&);	// Intersection
+	bool isInside(const Range&)const;	// A inside B ?
+	bool intersects(const Range&);		// A intesects B?
 	
 	// Stream Operators
 	friend std::ostream& operator<<(std::ostream&,const Range&);

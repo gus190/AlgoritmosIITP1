@@ -1,123 +1,66 @@
 #include <iostream>
 #include <cstdlib>
-//#include <cmath>
-//#include <cstring>
-#include <sensor.h>
-#include <data.h>
-
-#define DBL_MIN -1000000.0
-#define DBL_MAX 1000000.0
-//constructores
-Sensor::Sensor(){
-	ID = "Sensor";
+#include <classes/SensorNet.h>
+//-- Constructors / Destructor -- 
+SensorNet::SensorNet(){
+	
 }
-Sensor::Sensor(const string& name){
-	ID = name;
-}
-Sensor::Sensor(const Sensor& s){
-	ID = s.getID();
-	data = s.data;
-}
-//destructor
-Sensor::~Sensor(){
+SensorNet::~SensorNet(){
+	
 }
 
-//obtener un valor de dataeratura
-Data Sensor::getData(int pos){
-	return data[pos];
+//-- Setters --
+
+//-- Getters --
+size_t SensorNet::size(){
+	return sensors_.size();
 }
-//obtener el nombre
-const string& Sensor::getID()const{
-	return ID;
+//-- Metods --
+void SensorNet::clear(){
+	sensors_.clear();
+	sAvg_.clear();
 }
 
-size_t Sensor::size()const{
-	return data.size();
-}
-
-void Sensor::clear(){
-	data.clear();
-	ID.clear();
-}
-
-void Sensor::querry(ostream& output,size_t minRange,size_t maxRange){
-	double avg = 0,min = 0,max = 0;
-	int count = 0;
-	bool hasData = false;
-	if(minRange > maxRange){
-		output << "BAD QUERRY" << endl;
-		return;
-	}
-	if(minRange > data.size()){
-		output << "NO DATA" << endl;
-		return;
-	}
-	if(maxRange > data.size()-1){
-		maxRange = data.size();
-	}
-	min = DBL_MAX;
-	max = DBL_MIN;
-	for(size_t i = minRange; i<=maxRange-1;i++){
-		if(data[i].exist()){
-			hasData = true;
-			if(data[i].getData() < min){
-				min = data[i].getData();
+void SensorNet::createSAvg(){
+	sAvg_.clear();
+	for (size_t i = 0; i < sensors_[0].size(); i++){ // for each sameple time
+		double value = 0;
+		int count = 0;
+		for(size_t j=0;j<sensors_.size();j++){ // for each sensor
+			if(sensors_[j][i].exist()){	// if sample exist
+				value = value + sensors_[j][i].avg(); // add to value
+				count++;	//increment count;
 			}
-			if(data[i].getData() > max){
-				max = data[i].getData();
-			}
-			avg+=data[i].getData();
-			count++;
 		}
+			Package aux;
+			if(count == 0){			// if none exist
+				aux.range(i,i+1);	// set range
+				aux.exist(false);	//dont exist
+			}else{
+				value = value/count;  //get the avg of sum of values
+				aux.set(i,i+1,value); // set range and value
+			}
+			sAvg_.add(aux);
 	}
-	if(!hasData){
-		output << "NO DATA" << endl;
-		return;
-	}
-	avg = avg/count;
-	output << avg << ',' << min << ',' << max << ',' << count << endl;
 }
 
-std::ostream& operator<<(std::ostream& os,const Sensor& sensor){
+//-- Native operators -- 
+SensorNet& SensorNet::operator+(const Sensor& s){
+	sensors_.push_back(s);
+}
+SensorNet& SensorNet::operator=(const SensorNet& s){
+	sensors_ = s.sensors_;
+	sAvg_ = s.sAvg_;
+}
 
-	os << "Sensor ID: " << sensor.getID() << endl;
-	os << "Dato:" << endl;
-	os << sensor.data << endl;
-	os << "Cantidad de datos: " << sensor.size() << endl;
+//-- Stream operators --
+std::ostream& operator<<(std::ostream& os,const SensorNet& sn){
 	return os;
 }
-
-Sensor& Sensor::operator+(const Data& value){
-	data.push_back(value);
-	return *this;
-}
-Sensor& Sensor::operator+(const double& value){
-	Data d;
-	d = value;
-	data.push_back(d);
-	return *this;
-}
-Sensor& Sensor::operator+(const Sensor& s){
-	data.push_back(s.data);
-	return *this;
-}
-
-Sensor& Sensor::operator=(const string& name){
-	ID = name;
-	return *this;
-}
-
-Sensor& Sensor::operator=(const Sensor& s){
-	ID = s.ID;
-	data = s.data;
-	return *this;
-}
-
-bool Sensor :: operator==(const Sensor& s){
-	return s.ID==ID;
-}
-
-std::istream & operator >> (std::istream& is,Sensor& sensor){
-	cout << " istream no implementado";
+std::istream& operator>>(std::istream& is,SensorNet& sn){
+	// parse input
+	
+	sn.createSAvg();
 	return is;
 }
+

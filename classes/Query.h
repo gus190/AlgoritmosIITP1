@@ -1,37 +1,34 @@
-#ifndef _SENSOR_H_INCLUDED_
-#define _SENSOR_H_INCLUDED_
+#ifndef _QUERY_H_INCLUDED_
+#define _QUERY_H_INCLUDED_
 
 #include <cstdlib>
 #include <iostream>
-#include <array.h>
+#include <classes/Array.h>
 #include <data.h>
 
 using namespace std;
 
-class Sensor {
-	string ID;
-	Array<Data> data;
+class Query{
+	Range rg_;
+	string name_;
+	
 public:
-	Sensor();
-	Sensor(const string&);
-	Sensor(const Sensor&);
-	~Sensor();
+	Query();
+	~Query();
 	
-	Data getData(int);
-	size_t size() const;
-	const string& getID()const;
-	void clear();
-	void querry(ostream&,size_t,size_t);
+	// Getters
+	string& name()const;
+	Range& range()const;
 	
-	Sensor& operator+(const double&);
-	Sensor& operator+(const Data&);
-	Sensor& operator+(const Sensor&);
-	Sensor& operator=(const string&);
-	Sensor& operator=(const Sensor&);
-	bool operator==(const Sensor&);
+	// Setters
+	void name(const string&);
+	void range(const size_t&,const size_t&);
+	void range(const Range&);
 	
-	friend std::ostream& operator<<(std::ostream&,const Sensor&);
-	friend std::istream& operator>>(std::istream&,Sensor&);
+	// Metods
+	void process()
+	// Native operators
+	
 };
 
 #endif

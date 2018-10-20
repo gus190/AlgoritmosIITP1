@@ -166,11 +166,17 @@ static void opt_help(string const &arg){
 // ---- main ---- //
 int main(int argc, char * const argv[]){
 
-	//parseo de la entrada
-	cmdline cmdl(options);
+	// Input parse
+	Cmdline cmdl(options);
 	cmdl.parse(argc, argv);
 	
+	// Data parse
+	SensorNet sensors();
+	sensors << *idss;
 	
+	// Query parse and process
+	Query query;
+	query.process(*iss,sensors,*oss);
 	
 	
 	return 0;

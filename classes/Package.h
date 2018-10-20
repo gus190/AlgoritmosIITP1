@@ -47,7 +47,6 @@ public:
 	
 	// Stream operators
 	friend std::ostream& operator<<(std::ostream&,const Package&);
-	friend std::istream& operator>>(std::istream&,Package&);
 	
 private:	
 	bool exist_;

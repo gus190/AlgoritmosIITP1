@@ -49,7 +49,7 @@ size_t Range::max()const{
 	// Get max
 	return max_;
 }
-void Range::setRange(const size_t& min,const size_t& max){ 
+void Range::range(const size_t& min,const size_t& max){ 
 	// Set range from min max
 	min_ = min;
 	max_ = max;
@@ -59,7 +59,7 @@ void Range::setRange(const size_t& min,const size_t& max){
 		empty_ = true;
 	}
 }
-void Range::setMin(const size_t& min){ 
+void Range::min(const size_t& min){ 
 	// Set min
 	min_ = min;
 	if(min_ < max_){
@@ -68,7 +68,7 @@ void Range::setMin(const size_t& min){
 		empty_ = true;
 	}
 }
-void Range::setMax(const size_t& max){ 
+void Range::max(const size_t& max){ 
 	// Set max
 	max_ = max;
 	if(min_ < max_){
@@ -98,18 +98,6 @@ bool Range::intersects(const Range& range){
 	return false;
 }
 
-Range& Range::intersection(const Range& range){
-	// A intersection B
-	if(min_ <= range.min_)
-		min_ = range.min_;
-	if(max_ >= range.max_)
-		max_ = range.max_;
-	if(min_ < max_)
-		empty_ = false;
-	else
-		empty_ = true;
-	return *this;
-}
 //-- Native Operators --
 bool Range::operator==(const Range& range)const{
 	// Bool equal

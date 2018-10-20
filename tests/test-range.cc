@@ -15,7 +15,7 @@ int main(){
 		case 'A': // set A
 			if(cin>>ch && ch==',' && cin>>rgmin && cin>>ch && ch==',' &&
 				cin>>rgmax){
-					A.setRange(rgmin,rgmax);
+					A.range(rgmin,rgmax);
 					aux = A;
 					cout << aux;
 			}else{
@@ -27,7 +27,7 @@ int main(){
 		case 'B': // set B
 			if(cin>>ch && ch==',' && cin>>rgmin && cin>>ch && ch==',' &&
 				cin>>rgmax){
-				B.setRange(rgmin,rgmax);
+				B.range(rgmin,rgmax);
 			}else{
 				cout << "Bad range parse. ex.:A,0,20" << endl;
 				cout << "Where input is <rng>,<minrg>,<maxrg>";

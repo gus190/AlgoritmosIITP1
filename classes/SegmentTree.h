@@ -25,23 +25,26 @@ public:
 	// Setters
 	
 	// Metods
-	void clear();//clear
-	Package& build(const size_t&); //create all parent nodes
-	bool haveChild(const size_t&)const;
-	size_t firstChild(const size_t&)const;
-	size_t secondChild(const size_t&)const;
-
+	void clear(); //clear
+	bool haveChild(const size_t&)const; // ask if have children
+	size_t lChild(const size_t&)const; // index of 1st child
+	size_t rChild(const size_t&)const; // index of 2nd child
+	Package& build(const size_t&); //create all parent nodes (recursive)
+	void build(const Array<Package>&); //position leaves and create parents
+	void build(); //build st from scratch with the leaves added
+	Package& leaf(const size_t&); //return leaf (can be done as operator[])
+	void printLeaves(std::ostream&); // print leaves
 	// Native operators
 	SegmentTree& operator=(const SegmentTree&); //asignation
+	SegmentTree& operator+(const Package&); //push to array
 	
 	// Stream operators
 	friend std::ostream& operator<<(std::ostream&,const SegmentTree&);
-	friend std::istream& operator>>(std::istream&,SegmentTree&);
 
-	private:	
+private:	
 	bool exist_;
 	Array<Package> st_;
-	size_t lSize_,height_,nSize_; //leaves size, height of the tree, nodes size(total size)
+	size_t lSize_,height_,nSize_; //leaves size, height, nodes size(total size)
 };
 
 #endif

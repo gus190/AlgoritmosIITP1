@@ -16,7 +16,7 @@ main.o: main.h classes/array.h classes/Cmdline.h classes/Sensor.h classes/Packag
 	$(CXX) $(CXXFLAGS) -o obj/main.o -c main.cc
 
 #class objects	
-obj: Range.o Package.o SegmentTree.o Cmdline.o
+obj: Range.o Package.o SegmentTree.o Cmdline.o Sensor.o SensorNet.o
 
 Range.o: classes/Range.cc classes/Range.h
 	$(CXX) $(CXXFLAGS) -o obj/Range.o -c classes/Range.cc
@@ -29,6 +29,13 @@ SegmentTree.o: classes/SegmentTree.cc classes/SegmentTree.h
 
 Cmdline.o: classes/Cmdline.cc classes/Cmdline.h
 	$(CXX) $(CXXFLAGS) -o obj/Cmdline.o -c classes/Cmdline.cc	
+
+Sensor.o: classes/Sensor.cc classes/Sensor.h
+	$(CXX) $(CXXFLAGS) -o obj/Sensor.o -c classes/Sensor.cc
+	
+SensorNet.o: classes/SensorNet.cc classes/SensorNet.h
+	$(CXX) $(CXXFLAGS) -o obj/SensorNet.o -c classes/SensorNet.cc
+	
 #test objects generators
 tests: test-st test-pkg test-range
 

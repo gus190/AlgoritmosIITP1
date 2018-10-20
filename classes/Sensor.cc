@@ -1,49 +1,74 @@
 #include <iostream>
 #include <cstdlib>
-//#include <cmath>
-//#include <cstring>
-#include <sensor.h>
-#include <data.h>
+#include <classes/Sensor.h>
 
-#define DBL_MIN -1000000.0
-#define DBL_MAX 1000000.0
-//constructores
+//-- Constructors / Destructor -- 
 Sensor::Sensor(){
-	ID = "Sensor";
+	//Empty
+	name_ = " ";
 }
 Sensor::Sensor(const string& name){
-	ID = name;
+	// From name
+	name_ = name;
+}
+Sensor::Sensor(const string& name, const Array<Package>& arr):data_(arr){
+	// From name and array
+	name_ = name;
 }
 Sensor::Sensor(const Sensor& s){
-	ID = s.getID();
-	data = s.data;
+	// Copy
+	name_ = s.name_;
+	data_ = s.data_;
 }
-//destructor
 Sensor::~Sensor(){
+	// Destructor
 }
 
-//obtener un valor de dataeratura
-Data Sensor::getData(int pos){
-	return data[pos];
+//-- Setters -- 
+void Sensor::name(const string& name){
+	name_ = name;
+} 
+
+//-- Getters -- 
+string  Sensor::name()const{
+	return name_;
 }
-//obtener el nombre
-const string& Sensor::getID()const{
-	return ID;
+size_t  Sensor::size()const{
+	return data_.size();
 }
 
-size_t Sensor::size()const{
-	return data.size();
-}
-
+//-- Metods -- 
 void Sensor::clear(){
-	data.clear();
-	ID.clear();
+	name_ = " ";
+	data_.clear();
 }
-
-void Sensor::querry(ostream& output,size_t minRange,size_t maxRange){
+void Sensor::build(const Array<Package>& arr){
+	// Build st from array
+	data_.build(arr);
+}
+void Sensor::add(const Package& sample){
+	// add sample to st (has to be rebuilded later)
+	data_ + sample;
+}
+//-- Native operations -- 
+Sensor& Sensor::operator=(const string& name){
+	name_ = name;
+}
+Sensor& Sensor::operator=(const Sensor& s){
+	name_ = s.name_;
+	data_ = s.data_;
+}
+Sensor& Sensor::operator+(const Package& sample){
+	// Same as add metod;
+	data_ + sample;
+}
+Package& Sensor::operator[](const size_t& i){
+	return data_.leaf(i);
+}
+/* void Sensor::querry(ostream& output,size_t minRange,size_t maxRange){
 	double avg = 0,min = 0,max = 0;
 	int count = 0;
-	bool hasData = false;
+	bool hasPackage = false;
 	if(minRange > maxRange){
 		output << "BAD QUERRY" << endl;
 		return;
@@ -59,65 +84,38 @@ void Sensor::querry(ostream& output,size_t minRange,size_t maxRange){
 	max = DBL_MIN;
 	for(size_t i = minRange; i<=maxRange-1;i++){
 		if(data[i].exist()){
-			hasData = true;
-			if(data[i].getData() < min){
-				min = data[i].getData();
+			hasPackage = true;
+			if(data[i].getPackage() < min){
+				min = data[i].getPackage();
 			}
-			if(data[i].getData() > max){
-				max = data[i].getData();
+			if(data[i].getPackage() > max){
+				max = data[i].getPackage();
 			}
-			avg+=data[i].getData();
+			avg+=data[i].getPackage();
 			count++;
 		}
 	}
-	if(!hasData){
+	if(!hasPackage){
 		output << "NO DATA" << endl;
 		return;
 	}
 	avg = avg/count;
 	output << avg << ',' << min << ',' << max << ',' << count << endl;
-}
+} */
 
-std::ostream& operator<<(std::ostream& os,const Sensor& sensor){
-
-	os << "Sensor ID: " << sensor.getID() << endl;
-	os << "Dato:" << endl;
-	os << sensor.data << endl;
-	os << "Cantidad de datos: " << sensor.size() << endl;
+//-- Stream operations -- 
+std::ostream& operator<<(std::ostream& os,Sensor& sensor){
+	// Output stream
+	os << "Sensor name: " << sensor.name() << endl;
+	os << "Data:" << endl;
+	sensor.data_.printLeaves(os);
+	os << endl;
+	os << "Samples: " << sensor.size() << endl;
 	return os;
 }
 
-Sensor& Sensor::operator+(const Data& value){
-	data.push_back(value);
-	return *this;
-}
-Sensor& Sensor::operator+(const double& value){
-	Data d;
-	d = value;
-	data.push_back(d);
-	return *this;
-}
-Sensor& Sensor::operator+(const Sensor& s){
-	data.push_back(s.data);
-	return *this;
-}
-
-Sensor& Sensor::operator=(const string& name){
-	ID = name;
-	return *this;
-}
-
-Sensor& Sensor::operator=(const Sensor& s){
-	ID = s.ID;
-	data = s.data;
-	return *this;
-}
-
-bool Sensor :: operator==(const Sensor& s){
-	return s.ID==ID;
-}
-
 std::istream & operator >> (std::istream& is,Sensor& sensor){
+	// Input stream
 	cout << " istream no implementado";
 	return is;
 }

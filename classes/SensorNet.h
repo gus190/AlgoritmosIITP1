@@ -1,25 +1,38 @@
-#ifndef _SENSOR_H_INCLUDED_
-#define _SENSOR_H_INCLUDED_
+#ifndef _SENSORNET_H_INCLUDED_
+#define _SENSORNET_H_INCLUDED_
 
 #include <cstdlib>
 #include <iostream>
-#include <array.h>
-#include <data.h>
+#include <classes/Array.h>
+#include <classes/Sensor.h>
 
 using namespace std;
 
-class Sensor {
-	Array<Sensor> data_;
+class SensorNet{
+
+	Array<Sensor> sensors_;
+	Sensor sAvg_;
 public:
+	// Constructors / Destructor
 	SensorNet();
 	~SensorNet();
 	
-	void parse(istream&);
-	void clear();
+	// Setters
+	
+	// Getters
 	size_t size();
 	
-	friend std::ostream& operator<<(std::ostream&,const Sensor&);
-	friend std::istream& operator>>(std::istream&,Sensor&);
+	// Metods
+	void clear();
+	void createSAvg();
+	
+	// Native operators
+	SensorNet& operator=(const SensorNet&);
+	SensorNet& operator+(const Sensor&);
+	
+	// Stream operators
+	friend std::ostream& operator<<(std::ostream&,const SensorNet&);
+	friend std::istream& operator>>(std::istream&,SensorNet&); // parse file
 };
 
 #endif

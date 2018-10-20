@@ -84,7 +84,7 @@ void Package::range(const Range& data){
 	rg_ = data;
 }
 void Package::range(const size_t& minrg,const size_t& maxrg){
-	rg_.setRange(minrg,maxrg);
+	rg_.range(minrg,maxrg);
 }
 void Package::count(const size_t& data){
 	count_ = data;
@@ -101,7 +101,7 @@ void Package::set(const Range& rg,const double& data){ // Range and data with co
 	exist_ = true;
 }
 void Package::set(const size_t& minrg,const size_t& maxrg,const double& data){ // Range and data with count 1;
-	rg_.setRange(minrg,maxrg);
+	rg_.range(minrg,maxrg);
 	min_ = data;
 	max_ = data;
 	avg_ = data;
@@ -158,7 +158,7 @@ Package& Package::operator=(const Package& pkg){
 }
 
 //-- Stream operators -- 
-std::ostream & operator<< (std::ostream& os,const Package& pkg){
+std::ostream& operator<<(std::ostream& os,const Package& pkg){
 	os << '{' << pkg.rg_ << ',';
 	if(!pkg.exist_){
 	os << "NoData"  << '}';
@@ -170,8 +170,4 @@ std::ostream & operator<< (std::ostream& os,const Package& pkg){
 		os << pkg.count_ <<'}';
 	}
 	return os;
-}
-std::istream & operator >> (std::istream& is,Package& Package){
-	cout << " istream no implementado";
-	return is;
 }
