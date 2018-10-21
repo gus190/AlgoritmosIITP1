@@ -7,6 +7,10 @@
 using namespace std;
 
 class Range{
+private:
+	size_t min_; // min range
+	size_t max_; // max range
+	bool empty_; // bool exist
 public:
 	// Constructors / Destructor
 	Range(); // Empty
@@ -38,11 +42,6 @@ public:
 	// Stream Operators
 	friend std::ostream& operator<<(std::ostream&,const Range&);
 	friend std::istream& operator>>(std::istream&,Range&);
-	
-private:
-	size_t min_; // min range
-	size_t max_; // max range
-	bool empty_; // bool exist
 };
 
 

@@ -8,6 +8,11 @@
 using namespace std;
 
 class Package{
+private:	
+	bool exist_;
+	Range rg_;
+	double max_,min_,avg_;
+	size_t count_;
 public:
 	// Constructors / Destructors
 	Package(); // Empty
@@ -47,12 +52,6 @@ public:
 	
 	// Stream operators
 	friend std::ostream& operator<<(std::ostream&,const Package&);
-	
-private:	
-	bool exist_;
-	Range rg_;
-	double max_,min_,avg_;
-	size_t count_;
 };
 
 #endif

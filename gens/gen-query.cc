@@ -139,7 +139,7 @@
 			if(rand() % 100 >= randNodata){ // Random chance of no sensor ID (average)
 				*oss << "Sensor" << (rand() % number);
 			}
-			*oss << << ',';
+			*oss << ',';
 			size_t min = (rand() % maxRange); // Random min range from 0 to maxrange
 			*oss << min << ','; 
 			size_t max = (rand() % (maxRange - min)) + min; // Random max range from min to maxrange
