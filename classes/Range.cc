@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <iostream>
-#include <classes/range.h>
+#include <classes/Range.h>
 
 using namespace std;
 
