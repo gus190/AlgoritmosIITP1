@@ -46,27 +46,9 @@ int main(){
 			}
 			cout << endl;
 			break;
-		case 'n': // A n B
-			aux = A;
-			aux.intersection(B);
-			cout << aux;
-			cout << endl;
-			break;
 		case 'u': // A u B
 			aux = A + B;
 			cout << aux;
-			cout << endl;
-			break;
-		case 'E': // is empty?
-			cout << "A is empty? " ;
-			if(A.empty())
-				cout << "true";
-			else 
-				cout << "false";
-			cout << endl;
-			break;
-		case 'D': // A is different from B ?
-			cout << "A != B? " << (A != B);
 			cout << endl;
 			break;
 		case 'I': // A inside B?.
@@ -83,7 +65,7 @@ int main(){
 			}
 			cout << endl;
 			break;
-		case 'N': // A intersects B?.
+		case 'n': // A intersects B?.
 			cout << "A intersects B?: " << A.intersects(B);
 			cout << endl;
 			break;

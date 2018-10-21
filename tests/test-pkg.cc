@@ -71,11 +71,11 @@ int main(){
 		case 'M': // Merge A and B, store in A (print 3 different forms)
 			aux = A;
 			aux.merge(B);
-			cout << "Forma 1: merge(pkg) = " << A << '+' << B << '=' <<  aux;
+			cout << "Forma 1: merge(pkg) = " << A << '+' << B << '=' <<  aux << endl;
 			aux.merge(A,B);
-			cout << "Forma 2: merge(pkg1,pkg2) = "<< A << '+' << B << '=' <<  aux;
-			aux = A+B;
-			cout << "Forma 3: suma usada como merge = "<< A << '+' << B << '=' << aux;
+			cout << "Forma 2: merge(pkg1,pkg2) = "<< A << '+' << B << '=' <<  aux << endl;
+			aux+A+B;
+			cout << "Forma 3: suma usada como merge = "<< A << '+' << B << '=' << aux << endl;
 			A = aux;
 			break;
 		default:
