@@ -3,8 +3,7 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <classes/Array.h>
-#include <data.h>
+#include <classes/Range.h>
 
 using namespace std;
 

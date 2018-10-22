@@ -46,7 +46,7 @@ Package::Package(const double &data,const Range &rg):rg_(rg){
 Package::Package(const Package &pkg1,const Package &pkg2){ 
 	// Parents (merge 2 pkg)
 	*this = pkg1;
-	this->merge(pkg2);
+	*this + pkg2;
 }
 Package::~Package(){
 	// Destructor
@@ -117,7 +117,9 @@ void Package::clear(){
 	avg_=0;
 	count_=0;
 }
-Package& Package::merge(const Package &pkg){ //merge this with a pkg
+
+//-- Native operators --
+Package& Package::operator+(const Package& pkg){
 	//exist
 	exist_ = exist_ || pkg.exist_;
 	//min
@@ -137,16 +139,6 @@ Package& Package::merge(const Package &pkg){ //merge this with a pkg
 	//count
 	count_+=pkg.count_;
 }
-Package& Package::merge(const Package& pkg1,const Package& pkg2){ // merge 2 pkg in this
-	*this = pkg1;
-	this->merge(pkg2);
-	return *this;
-}
-//-- Native operators --
-Package& Package::operator+(const Package& pkg){
-	this->merge(pkg);
-	return *this;
-}
 Package& Package::operator=(const Package& pkg){
 	exist_ = pkg.exist_;
 	max_ = pkg.max_;
@@ -161,13 +153,19 @@ Package& Package::operator=(const Package& pkg){
 std::ostream& operator<<(std::ostream& os,const Package& pkg){
 	os << '{' << pkg.rg_ << ',';
 	if(!pkg.exist_){
-	os << "NoData"  << '}';
+	os << "noExist"  << '}';
 	}
 	else{
 		os << pkg.min_ << ',';
 		os << pkg.max_ << ',';
 		os << pkg.avg_ << ','; 
-		os << pkg.count_ <<'}';
+		os << pkg.count_ << ',';
+		if(pkg.exist_){
+			os << "true";
+		}else{
+			os << "false";
+		}
+		os<<'}';
 	}
 	return os;
 }

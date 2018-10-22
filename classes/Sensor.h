@@ -14,14 +14,11 @@ public:
 	// Constructors / Destructor
 	Sensor(); // Empty
 	Sensor(const string&); // Name
-	Sensor(const Array<Package>&); // From array
-	Sensor(const string&,const Array<Package>&); // From array and set name
 	Sensor(const Sensor&); // Copy
 	~Sensor(); // Destructor
 	
 	// Setters
 	void name(const string&); 
-	void build(const Array<Package>&);
 	
 	// Getters
 	string name()const;
@@ -29,9 +26,9 @@ public:
 	
 	// Metods
 	void clear();
-	void add(const Package&);
 	void buildST();
 	Package query(const Range&);
+	void printTree();
 	
 	// Native operations
 	Sensor& operator=(const string&);

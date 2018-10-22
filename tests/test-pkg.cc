@@ -68,15 +68,10 @@ int main(){
 			}
 			cout << endl;
 			break;
-		case 'M': // Merge A and B, store in A (print 3 different forms)
+		case 'M': // Merge A and B in aux
 			aux = A;
-			aux.merge(B);
-			cout << "Forma 1: merge(pkg) = " << A << '+' << B << '=' <<  aux << endl;
-			aux.merge(A,B);
-			cout << "Forma 2: merge(pkg1,pkg2) = "<< A << '+' << B << '=' <<  aux << endl;
-			aux+A+B;
-			cout << "Forma 3: suma usada como merge = "<< A << '+' << B << '=' << aux << endl;
-			A = aux;
+			aux + B;
+			cout <<"suma usada como merge = "<< A << '+' << B << '=' << aux << endl;
 			break;
 		default:
 			cout << "error: unknown command (";

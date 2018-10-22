@@ -43,8 +43,6 @@ public:
 	
 	// Metods
 	void clear();// Clear package
-	Package& merge(const Package&); // Merge 
-	Package& merge(const Package&,const Package&); // Merge 2 pkg in this
 	
 	// Native operators
 	Package& operator+(const Package&); // Merge

@@ -9,10 +9,10 @@ all: cleanall obj gens tests main
 clean: cleanall
 	@/bin/true
 #main
-main: main.o Sensor.o SensorNet.o Query.o Range.o Package.o SegmentTree.o Cmdline.o
-	$(CXX) $(LDFLAGS) -o tp1 obj/sensor.o obj/main.o obj/cmdline.o obj/data.o
+main: Range.o Package.o SegmentTree.o Sensor.o SensorNet.o Query.o Cmdline.o  main.o
+	$(CXX) $(LDFLAGS) -o exec/tp1 obj/main.o obj/Cmdline.o obj/SensorNet.o obj/Sensor.o obj/Range.o obj/SegmentTree.o obj/Package.o
 
-main.o: main.h classes/array.h classes/Cmdline.h classes/Sensor.h classes/Package.h
+main.o: main.h classes/Array.h classes/Cmdline.h classes/Sensor.h classes/Package.h classes/SensorNet.h classes/SegmentTree.h classes/Range.h
 	$(CXX) $(CXXFLAGS) -o obj/main.o -c main.cc
 
 #class objects	
@@ -35,6 +35,9 @@ Sensor.o: classes/Sensor.cc classes/Sensor.h
 	
 SensorNet.o: classes/SensorNet.cc classes/SensorNet.h
 	$(CXX) $(CXXFLAGS) -o obj/SensorNet.o -c classes/SensorNet.cc
+	
+Query.o: classes/Query.cc classes/Query.h
+	$(CXX) $(CXXFLAGS) -o obj/Query.o -c classes/Query.cc
 	
 #test objects generators
 tests: test-st test-pkg test-range

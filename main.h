@@ -9,6 +9,7 @@
 #include <classes/Array.h>
 #include <classes/SegmentTree.h>
 #include <classes/Sensor.h>
+#include <classes/SensorNet.h>
 
 using namespace std;
 

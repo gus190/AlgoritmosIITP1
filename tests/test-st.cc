@@ -31,14 +31,13 @@ int main(){
 					break;
 				}
 			}
-			cout << endl << arr;
+			cout << endl;
 			break;
 		}
 		case 'B': 
 		// Build st from array
 			{ 
-			SegmentTree saux(arr);
-			st = saux;
+			//st = saux;
 			break;
 			}
 		case 'C': 

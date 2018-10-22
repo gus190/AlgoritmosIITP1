@@ -1,7 +1,6 @@
 #include <cstdlib>
 #include <main.h>
 
-
 using namespace std;
 
 static istream *iss = NULL;		// Input Stream 
@@ -76,107 +75,24 @@ static void opt_help(string const &arg){
 	exit(0);
 }
 
-// funcion readData que lee datos del archivo y los almacena en los objetos
-/* void readData(istream& input, Array <Sensor> & sensores){
-	// variables utilizadas
-	string line,token;
-	istringstream lineStr;
-	Sensor sensorAux;
-	
-	// parseo de la primera linea (nombres)
-	getline(input,line);					//obtengo linea del input
-	lineStr.str(line);						// la streameo
-	while(getline(lineStr,token,',')){		//obtengo los valuees separados por coma
-		sensorAux = token;					//asigno el nombre al objeto sensor auxiliar
-		sensores.push_back(sensorAux);		//pusheo al array el nuevo objeto
-	}
-	
-	// parseo del resto de las lineas (temperaturas)
-	while(getline(input,line)){	//mientras hayan lineas
-		int count = 0;
-		lineStr.clear();
-		lineStr.str(line);
-		while(getline(lineStr,token,',')){	// dato entre comas o /n
-			if (!token.empty()){
-				sensores[count] + atof(token.c_str()); // pusheo el dato
-			}else{
-				Data d;
-				sensores[count] + d;
-			}
-			count++;
-		}
-	}
-} */
-
-/* void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
-	//variables
-	string line,token;
-	int pos;
-	size_t min,max;
-	char ch;
-	bool good = false;
-	
-	// Leo el querry linea por linea y hago las consultas
-	while(getline(input,line)){
-		Sensor sAux;
-		istringstream lineStr;
-		lineStr.str(line);
-		// leo primer variable (nombre)
-		getline(lineStr,token,',');
-		// leo minimo y maximo, checkeando si esta bien
-		if(lineStr >> min &&
-			lineStr >> ch && ch == ',' &&
-			lineStr >> max){
-				good = true;	
-		} else {
-			good = false;
-		}
-		// si no hay nombre en la consulta, se hace un promedio de los sensores
-		if(good && token.empty()){		
-			for (size_t i = 0; i < sensores[0].size(); i++){
-				Data value;
-				int count=0;
-				for(size_t j=0;j<sensores.size();j++){
-					if(sensores[j].getData(i).exist()){
-						value = sensores[j].getData(i) + value;
-						count++;
-					}
-				}
-					value = value/count; 
-					sAux + value;	
-			}
-			sAux.querry(output,min,max);
-		// si hay nombre en la consulta
-		}else if(good){
-			sAux = token;
-			pos = sensores.linear_search(sAux);
-			//si no encuentra posicion
-			if(pos == -1){
-				output << "UNKNOWN ID" << endl;
-				continue;
-			}
-			sensores[pos].querry(output, min, max);
-		//si hay mal parseo
-		}else{
-			output << "BAD QUERRY" << endl;
-		}
-	}
-} */
-
 // ---- main ---- //
 int main(int argc, char * const argv[]){
 
 	// Input parse
-	Cmdline cmdl(options);
+	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
 	
+	cout << "Input parse complete" << endl;
+	
 	// Data parse
-	SensorNet sensors();
-	sensors << *idss;
+	SensorNet sensors;
+	cout << "Sensor network created" << endl;
+
+	*idss >> sensors;
 	
 	// Query parse and process
-	Query query;
-	query.process(*iss,sensors,*oss);
+	//Query query;
+	//query.process(*iss,sensors,*oss);
 	
 	
 	return 0;

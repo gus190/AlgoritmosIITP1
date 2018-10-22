@@ -139,7 +139,7 @@ template <typename T>
 T & Array<T>::operator [ ]( int pos )
 {
 	// Utilizamos assert para saber si se puede acceder al elemento.
-	//assert( (0 < pos) || (pos < usedSize) ) ; 
+	assert( (0 < pos) || (pos < usedSize) ) ; 
 	return p[pos]; 
 }
 
@@ -150,7 +150,7 @@ const T & Array<T>::operator [ ]( int pos ) const
 	// Es necesario si se llama desde dentro de una función que es const
 	// El compilador se dará cuenta de cual usar
 
-	//assert( (0 < pos) || (pos < usedSize) ) ; 
+	assert( (0 < pos) || (pos < usedSize) ) ; 
 	return p[pos]; 
 }
 
@@ -215,7 +215,7 @@ std::ostream & operator<< (std::ostream& os,const Array<T> & arr)
 	os << "(";
 
 	for(size_t i=0; i<arr.size()-1; ++i){
-		os << arr[i] << ",";
+		os << arr[i] << " , ";
 	}
 	os << arr[arr.size()-1];
 	os << ")";
