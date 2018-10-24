@@ -87,6 +87,8 @@ int main(int argc, char * const argv[]){
 	*idss >> sensors;
 	cout << "Data parse complete" << endl;
 	
+	//cout << sensors << endl; -- debug
+	
 	// Query parse and process
 	Query query;
 	query.process(*iss,sensors,*oss);

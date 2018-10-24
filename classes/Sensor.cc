@@ -70,7 +70,8 @@ Package Sensor::query(const size_t& node,const Range& rg){
 	Package ans;
 	if(!data_[node].range().intersects(rg)){ // if node doesnt intersect range
 		ans.clear();
-		return ans;		// return empty package
+		ans.range(data_[node].range());
+		return ans;		// return empty package with propper range
 	}else if(data_[node].range().isInside(rg)){ // if node range is inside range
 		return data_[node];	//return complete node
 		
@@ -99,7 +100,8 @@ std::ostream& operator<<(std::ostream& os,Sensor& sensor){
 	// Output stream
 	os << "Sensor name: " << sensor.name() << endl;
 	os << "Data:" << endl;
-	sensor.data_.printLeaves(os);
+	os << sensor.data_;
+	//sensor.data_.printLeaves(os);
 	os << endl;
 	os << "Samples: " << sensor.size() << endl;
 	return os;

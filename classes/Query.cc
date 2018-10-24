@@ -109,8 +109,11 @@ void Query::process(std::istream& is,SensorNet& sn,std::ostream& os){
 			// if found it, query the sensor
 			ans = sn[pos].query(0,rg_);
 		}
-		os << ans << endl;
-		
+		if(!ans.exist()){
+			os << "NO DATA" << endl;
+		}else{
+			ans.printStd(os);
+		}
 	}
 	return;
 }

@@ -33,7 +33,7 @@ public:
 	Sensor& operator[](const size_t&);
 	
 	// Stream operators
-	friend std::ostream& operator<<(std::ostream&,const SensorNet&);
+	friend std::ostream& operator<<(std::ostream&,SensorNet&);
 	friend std::istream& operator>>(std::istream&,SensorNet&); // parse file
 };
 

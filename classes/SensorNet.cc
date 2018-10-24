@@ -71,7 +71,10 @@ Sensor& SensorNet::operator[](const size_t& pos){
 	return sensors_[pos];
 }
 //-- Stream operators --
-std::ostream& operator<<(std::ostream& os,const SensorNet& sn){
+std::ostream& operator<<(std::ostream& os,SensorNet& sn){
+	for(size_t i = 0; i < sn.sensors_.size();i++){
+		os << sn.sensors_[i];
+	}
 	return os;
 }
 std::istream& operator>>(std::istream& is,SensorNet& sn){

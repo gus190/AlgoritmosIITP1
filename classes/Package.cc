@@ -111,8 +111,8 @@ void Package::set(const size_t& minrg,const size_t& maxrg,const double& data){ /
 //-- Metods --
 void Package::clear(){
 	rg_.clear();
-	min_=0;
-	max_=0;
+	min_=INFPOS;
+	max_=INFNEG;
 	exist_=false;
 	avg_=0;
 	count_=0;

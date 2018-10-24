@@ -160,6 +160,7 @@ SegmentTree& SegmentTree::operator+(const Package& data){
 		st_.push_back(data);
 		nodes_++;
 		leaves_++;
+		samples_++;
 		exist_ = true;
 		return *this;
 	}else if(leaves_ == samples_){ //if leaves = samples (no more free space in st)
