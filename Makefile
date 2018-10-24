@@ -71,7 +71,7 @@ gen-query.o: gens/gen-query.h classes/Cmdline.h
 	@$(CXX) $(CXXFLAGS) -o obj/gen-query.o -c gens/gen-query.cc
 
 gen-data: gen-data.o Cmdline.o
-	@$(CXX) $(LDFLAGS) -o exec/gen-data obj/gen-data.o obj/cmdline.o
+	@$(CXX) $(LDFLAGS) -o exec/gen-data obj/gen-data.o obj/Cmdline.o
 
 gen-data.o: gens/gen-data.h classes/Cmdline.h
 	@$(CXX) $(CXXFLAGS) -o obj/gen-data.o -c gens/gen-data.cc
@@ -96,7 +96,7 @@ test-classes:
 
 test-valgrind:
 	@echo testing valgrind ... 
-	valgrind --leak-check=full ./exec/tp1 -i files/queryCatedra.csv -d files/dataCatedra.csv -o ../dev/null
+	valgrind --leak-check=full ./exec/tp1 -i files/queryCatedra.csv -d files/dataCatedra.csv -o files/output.csv
 	@echo valgrind test done.
 
 files:

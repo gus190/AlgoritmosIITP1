@@ -1,6 +1,6 @@
 	#include <cstdlib>
 	#include <gens/gen-query.h>
-	#include <classes/cmdline.h>
+	#include <classes/Cmdline.h>
 	
 	using namespace std;
 
