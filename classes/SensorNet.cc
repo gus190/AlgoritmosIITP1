@@ -25,7 +25,15 @@ void SensorNet::clear(){
 	sensors_.clear();
 	sAvg_.clear();
 }
-
+size_t SensorNet::search(const string& name){
+	if(sensors_.size()==0)
+		return -1;
+	for(size_t i=0;i<sensors_.size();++i){
+		if((*this)[i] == name)
+			return i;
+	}
+	return -1;
+}
 void SensorNet::createSAvg(){
 	sAvg_.clear();
 	for (size_t i = 0; i < sensors_[0].size(); i++){ // for each sameple time
@@ -48,7 +56,9 @@ void SensorNet::createSAvg(){
 			sAvg_ + aux;
 	}
 }
-
+Sensor& SensorNet::sensorAvg(){
+	return sAvg_;
+}
 //-- Native operators -- 
 SensorNet& SensorNet::operator+(const Sensor& s){
 	sensors_.push_back(s);
@@ -57,7 +67,9 @@ SensorNet& SensorNet::operator=(const SensorNet& s){
 	sensors_ = s.sensors_;
 	sAvg_ = s.sAvg_;
 }
-
+Sensor& SensorNet::operator[](const size_t& pos){
+	return sensors_[pos];
+}
 //-- Stream operators --
 std::ostream& operator<<(std::ostream& os,const SensorNet& sn){
 	return os;
@@ -96,13 +108,9 @@ std::istream& operator>>(std::istream& is,SensorNet& sn){
 		}
 	sampleCount++;
 	}
-	cout << "Data parse complete" << endl;
-	for(size_t i = 0; i<sn.sensors_.size();i++){
-		sn.sensors_[i].printTree();
-		cout << endl;
-		//cout << sn.sensors_[i];
-	}
+	sn.createSAvg();
 	cout << "Segment trees builded succesfully" << endl;
+	
 	return is;
 }
 

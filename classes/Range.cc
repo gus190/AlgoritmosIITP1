@@ -87,14 +87,10 @@ bool Range::isInside(const Range& range)const{
 }
 bool Range::intersects(const Range& range){ 
 	// A intersects B?
-	if(min_ >= range.max_)
-		return false;
-	if(max_ <= range.min_)
-		return false;
-	if(min_ < range.max_ && min_ >= range.min_)
+	//overlap = a.start < b.end && b.start < a.end;
+	if((range.min_ < max_) && (min_ < range.max_)){
 		return true;
-	if(max_ > range.min_ && max_ <= range.max_)
-		return true;
+	}
 	return false;
 }
 
@@ -141,10 +137,12 @@ std::ostream& operator<<(std::ostream& os,const Range& range){
 }
 std::istream& operator>>(std::istream& is,Range& range){
 	char ch;
-	if( is >> ch && ch == '[' && is >> range.min_ 
-	  &&  is >> ch && ch == ',' && is >> range.max_
-	  && is >> ch && ch == ')'){
-		
+	size_t min,max;
+	if(is >> min &&
+			is >> ch && ch == ',' &&
+			is >> max){
+		range.range(min,max);
+		return is;
 	}else{
 		range.clear();
 		cout << "Bad range parse." << endl;

@@ -10,6 +10,7 @@
 #include <classes/SegmentTree.h>
 #include <classes/Sensor.h>
 #include <classes/SensorNet.h>
+#include <classes/Query.h>
 
 using namespace std;
 

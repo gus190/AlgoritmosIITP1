@@ -1,5 +1,5 @@
 
-#include <classes/range.h>
+#include <classes/Range.h>
 #include <iostream>
 
 using namespace std;
@@ -16,23 +16,19 @@ int main(){
 			if(cin>>ch && ch==',' && cin>>rgmin && cin>>ch && ch==',' &&
 				cin>>rgmax){
 					A.range(rgmin,rgmax);
-					aux = A;
-					cout << aux;
 			}else{
 				cout << "Bad range parse. ex.:A,0,20" << endl;
 				cout << "Where input is <rng>,<minrg>,<maxrg>";
 			}
-			cout << endl;
 			break;
 		case 'B': // set B
 			if(cin>>ch && ch==',' && cin>>rgmin && cin>>ch && ch==',' &&
 				cin>>rgmax){
-				B.range(rgmin,rgmax);
+					B.range(rgmin,rgmax);
 			}else{
 				cout << "Bad range parse. ex.:A,0,20" << endl;
 				cout << "Where input is <rng>,<minrg>,<maxrg>";
 			}
-			cout << endl;
 			break;
 		case 'C': // clear
 			if(cin >> ch && ch == 'A'){
@@ -46,13 +42,14 @@ int main(){
 			}
 			cout << endl;
 			break;
-		case 'u': // A u B
-			aux = A + B;
+		case '+': // A u B
+			aux = A;
+			aux + B;
 			cout << aux;
 			cout << endl;
 			break;
-		case 'I': // A inside B?.
-			cout << "Ac=B? " << A.isInside(B);
+		case 'c': // A inside B?.
+			A.isInside(B)?cout << "true":cout <<"false";
 			cout << endl;
 			break;
 		case 'P': // print
@@ -66,7 +63,7 @@ int main(){
 			cout << endl;
 			break;
 		case 'n': // A intersects B?.
-			cout << "A intersects B?: " << A.intersects(B);
+			A.intersects(B)?cout << "true":cout <<"false";
 			cout << endl;
 			break;
 		default:

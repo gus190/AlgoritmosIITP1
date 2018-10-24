@@ -43,6 +43,7 @@ public:
 	
 	// Metods
 	void clear();// Clear package
+	void printStd(std::ostream&); // print std way
 	
 	// Native operators
 	Package& operator+(const Package&); // Merge

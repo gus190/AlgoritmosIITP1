@@ -56,7 +56,6 @@ int main(){
 			}else {
 				cout << "bad parameter for Clear C(A or B)";
 			}
-			cout << endl;
 			break;
 		case 'P': // print
 			if(cin >> ch && ch == 'A'){
@@ -71,7 +70,7 @@ int main(){
 		case 'M': // Merge A and B in aux
 			aux = A;
 			aux + B;
-			cout <<"suma usada como merge = "<< A << '+' << B << '=' << aux << endl;
+			cout << aux << endl;
 			break;
 		default:
 			cout << "error: unknown command (";

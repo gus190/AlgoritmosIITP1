@@ -45,6 +45,7 @@ public:
 	// Native operators
 	SegmentTree& operator=(const SegmentTree&); //asignation
 	SegmentTree& operator+(const Package&); //push to array
+	Package& operator[](const size_t&); //push to array
 	
 	// Stream operators
 	friend std::ostream& operator<<(std::ostream&,const SegmentTree&);

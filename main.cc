@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <main.h>
 
 using namespace std;
@@ -81,19 +80,17 @@ int main(int argc, char * const argv[]){
 	// Input parse
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
-	
 	cout << "Input parse complete" << endl;
 	
 	// Data parse
 	SensorNet sensors;
-	cout << "Sensor network created" << endl;
-
 	*idss >> sensors;
+	cout << "Data parse complete" << endl;
 	
 	// Query parse and process
-	//Query query;
-	//query.process(*iss,sensors,*oss);
-	
+	Query query;
+	query.process(*iss,sensors,*oss);
+	cout << "Query process complete" << endl;
 	
 	return 0;
 }

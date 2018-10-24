@@ -27,12 +27,13 @@ public:
 	// Metods
 	void clear();
 	void buildST();
-	Package query(const Range&);
+	Package query(const size_t&,const Range&);
 	void printTree();
 	
 	// Native operations
 	Sensor& operator=(const string&);
 	Sensor& operator=(const Sensor&);
+	bool operator==(const string&);
 	Sensor& operator+(const Package&);
 	Package& operator[](const size_t&);
 

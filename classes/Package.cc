@@ -117,6 +117,14 @@ void Package::clear(){
 	avg_=0;
 	count_=0;
 }
+void Package::printStd(ostream& os){
+	if(count_ == 0){
+		os << "NO DATA";
+	}else{
+		os << avg_ << ',' << min_ << ',' << max_ << ',' << count_;
+	}
+	os << endl;
+}
 
 //-- Native operators --
 Package& Package::operator+(const Package& pkg){
@@ -154,8 +162,7 @@ std::ostream& operator<<(std::ostream& os,const Package& pkg){
 	os << '{' << pkg.rg_ << ',';
 	if(!pkg.exist_){
 	os << "noExist"  << '}';
-	}
-	else{
+	}else{
 		os << pkg.min_ << ',';
 		os << pkg.max_ << ',';
 		os << pkg.avg_ << ','; 

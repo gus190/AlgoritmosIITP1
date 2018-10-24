@@ -25,10 +25,12 @@ public:
 	// Metods
 	void clear();
 	void createSAvg();
-	
+	size_t search(const string&);
+	Sensor& sensorAvg();
 	// Native operators
 	SensorNet& operator=(const SensorNet&);
 	SensorNet& operator+(const Sensor&);
+	Sensor& operator[](const size_t&);
 	
 	// Stream operators
 	friend std::ostream& operator<<(std::ostream&,const SensorNet&);

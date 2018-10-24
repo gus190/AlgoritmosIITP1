@@ -151,6 +151,9 @@ SegmentTree& SegmentTree::operator+(const Package& data){
 	// change leaves size so that st can be builded from the array
 
 }
+Package& SegmentTree::operator[](const size_t& i){
+	return st_[i];
+}
 // -- Stream operators -- 
 std::ostream & operator<< (std::ostream& os,const SegmentTree& st){
 	if(st.exist_ == false){
