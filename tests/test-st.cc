@@ -7,7 +7,7 @@ using namespace std;
 
 int main(){
 	char ch;
-	size_t count;
+	size_t count=0;
 	double daux;
 	Package pkg;
 	SegmentTree st;

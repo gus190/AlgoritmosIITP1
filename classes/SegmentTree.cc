@@ -62,7 +62,32 @@ size_t SegmentTree::rChild(const size_t& node)const{
 	// Return index of 2nd child
 	return 2*node+2;
 }
-
+void SegmentTree::expand(){
+	Array<Package> arr;
+	
+	// load samples into auxiliary array
+	for(int i=0;i<samples_;i++){
+		arr.push_back(st_[nodes_-samples_+i]);
+	}
+	
+	//set new sizes
+	height_++; //height of the tree
+	leaves_ = (size_t)(pow(2,height_));	// total size of the tree
+	nodes_ = 2*leaves_-1;		//number of nodes
+	
+	//create new st array
+	Array<Package> st(nodes_);
+	// Load samples (leaves)
+	for(size_t i = 0; i<arr.size(); i++){ // copy the array in the right location
+		st[nodes_-leaves_+i] = arr[i];
+	}
+	for(size_t i = arr.size();i<leaves_;i++){ // fill the final empty elements of array with their range
+		st[nodes_-leaves_+i].range(i,i+1);
+	}
+	st_ = st;
+	this->build(0); //rebuild tree
+	return;
+}
 Package& SegmentTree::build(const size_t& node){ 
 	// Create the tree from the leafs
 	// Recursive build, call until element with no childs,return node
@@ -131,25 +156,19 @@ SegmentTree& SegmentTree::operator=(const SegmentTree& st){
 }
 SegmentTree& SegmentTree::operator+(const Package& data){
 	//push to segment tree
-	if(leaves_ == samples_){ //if leaves = samples (no more free space in st)
-		if(leaves_ == 0){			// first time here
-			st_.push_back(data);	//push the data and change variables
-			samples_++;
-			nodes_++;
-			leaves_++;
-		}else{						//not the first time
-			st_.push_back(data);	//push the data, change variables and rebuild the nodes
-			samples_++;
-			nodes_++;
-			this->build();
-		}
-	}else{					// if leaves != means that leaves > samples (free space in st)
-		st_[nodes_-leaves_+samples_] = data;	// put data in place
-		samples_++;				//  incerment samples size
-		this->build(0);				// rebuild the nodes
+	if(leaves_ == 0){ //first time
+		st_.push_back(data);
+		nodes_++;
+		leaves_++;
+		exist_ = true;
+		return *this;
+	}else if(leaves_ == samples_){ //if leaves = samples (no more free space in st)
+		this->expand();
 	}
-	// change leaves size so that st can be builded from the array
-
+	st_[nodes_-leaves_+samples_] = data;	// put data in place
+	samples_++;		//  incerment samples size
+	this->build(0);	// rebuild the parents
+	return *this;
 }
 Package& SegmentTree::operator[](const size_t& i){
 	return st_[i];

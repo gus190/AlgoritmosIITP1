@@ -68,7 +68,6 @@ bool Sensor :: operator==(const string& str){
 
 Package Sensor::query(const size_t& node,const Range& rg){
 	Package ans;
-	
 	if(!data_[node].range().intersects(rg)){ // if node doesnt intersect range
 		ans.clear();
 		return ans;		// return empty package

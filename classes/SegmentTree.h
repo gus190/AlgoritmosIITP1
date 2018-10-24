@@ -14,6 +14,7 @@ private:
 	bool exist_;
 	Array<Package> st_;
 	size_t samples_,leaves_,height_,nodes_; //leaves size, height, nodes size(total size)
+	void expand();
 	
 public:
 	// Constructors / Destructor
@@ -42,6 +43,7 @@ public:
 	Package& leaf(const size_t&); //return leaf (can be done as operator[])
 	
 	void printLeaves(std::ostream&); // print leaves
+	
 	// Native operators
 	SegmentTree& operator=(const SegmentTree&); //asignation
 	SegmentTree& operator+(const Package&); //push to array

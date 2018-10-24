@@ -163,9 +163,9 @@ std::ostream& operator<<(std::ostream& os,const Package& pkg){
 	if(!pkg.exist_){
 	os << "noExist"  << '}';
 	}else{
+		os << pkg.avg_ << ','; 
 		os << pkg.min_ << ',';
 		os << pkg.max_ << ',';
-		os << pkg.avg_ << ','; 
 		os << pkg.count_ << ',';
 		if(pkg.exist_){
 			os << "true";
