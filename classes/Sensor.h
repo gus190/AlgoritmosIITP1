@@ -26,7 +26,6 @@ public:
 	
 	// Metods
 	void clear();
-	void buildST();
 	Package query(const size_t&,const Range&);
 	void printTree();
 	

@@ -87,11 +87,11 @@ void Query::process(std::istream& is,SensorNet& sn,std::ostream& os){
 		}
 		if(good){ // if good parse, validate ranges
 			if(rg_.empty()){
-				os << "BAD QUERRY" << endl;
+				os << "BAD QUERY" << endl;
 				continue;
 			}
 		}else{ 		// if bad parse 
-			os << "BAD QUERRY" << endl;
+			os << "BAD QUERY" << endl;
 			continue;
 		}
 		// if empty name

@@ -39,7 +39,7 @@ Query.o: classes/Query.cc classes/Query.h
 	@$(CXX) $(CXXFLAGS) -o obj/Query.o -c classes/Query.cc
 	
 #test objects generators
-tests: test-rg test-pkg test-st
+tests: test-rg test-pkg test-st test-sensor
 
 test-st: test-st.o SegmentTree.o Package.o Range.o
 	@$(CXX) $(LDFLAGS) -o exec/test-st obj/test-st.o obj/SegmentTree.o obj/Package.o obj/Range.o
@@ -59,6 +59,13 @@ test-rg: test-rg.o Range.o
 test-rg.o: tests/test-rg.cc
 	@echo Compiling class tests programs ...
 	@$(CXX) $(CXXFLAGS) -o obj/test-rg.o -c tests/test-rg.cc
+
+test-sensor: test-sensor.o Sensor.o SegmentTree.o Package.o Range.o
+	@$(CXX) $(LDFLAGS) -o exec/test-sensor obj/test-sensor.o obj/Sensor.o obj/SegmentTree.o obj/Package.o obj/Range.o
+	
+test-sensor.o: tests/test-sensor.cc
+	@$(CXX) $(CXXFLAGS) -o obj/test-sensor.o -c tests/test-sensor.cc
+
 
 #file generators
 gens: gen-query gen-data
@@ -99,5 +106,28 @@ test-valgrind:
 	valgrind --leak-check=full ./exec/tp1 -i files/queryCatedra.csv -d files/dataCatedra.csv -o files/output.csv
 	@echo valgrind test done.
 
-files:
-	@echo Processing all files
+test-files: main
+	@echo Testing data cases ...
+	@echo Testing practice data...
+	@./exec/tp1 -d files/testcases/practice.data -i files/testcases/practice.query -o files/testcases/practice.out
+	@diff -b files/testCases/practice.ref files/testCases/practice.out
+	@echo Done.
+	
+	@echo Testing justNames data...
+	@./exec/tp1 -d files/testcases/justNames.data -i files/testcases/justNames.query -o files/testcases/justNames.out
+	@diff -b files/testCases/justNames.ref files/testCases/justNames.out
+	@echo Done.
+	
+	@echo Testing emptySamples data...
+	@./exec/tp1 -d files/testcases/emptySamples.data -i files/testcases/emptySamples.query -o files/testcases/emptySamples.out
+	@diff -b files/testCases/emptySamples.ref files/testCases/emptySamples.out
+	@echo Done.
+	
+	@echo Testing emptyCases data...
+	@./exec/tp1 -d files/testcases/emptyCases.data -i files/testcases/emptyCases.query -o files/testcases/emptyCases.out
+	@diff -b files/testCases/emptyCases.ref files/testCases/emptyCases.out
+	@echo Done.
+	@echo All files tested.
+
+	
+

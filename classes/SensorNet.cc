@@ -36,24 +36,25 @@ size_t SensorNet::search(const string& name){
 }
 void SensorNet::createSAvg(){
 	sAvg_.clear();
-	for (size_t i = 0; i < sensors_[0].size(); i++){ // for each sameple time
+	for (size_t i = 0; i < sensors_[0].size(); i++){ // for each sample time
 		double value = 0;
 		int count = 0;
+
 		for(size_t j=0;j<sensors_.size();j++){ // for each sensor
 			if(sensors_[j][i].exist()){	// if sample exist
 				value = value + sensors_[j][i].avg(); // add to value
 				count++;	//increment count;
 			}
 		}
-			Package aux;
-			if(count == 0){			// if none exist
-				aux.range(i,i+1);	// set range
-				aux.exist(false);	//dont exist
-			}else{
-				value = value/count;  //get the avg of sum of values
-				aux.set(i,i+1,value); // set range and value
-			}
-			sAvg_ + aux;
+		Package aux;
+		if(count == 0){			// if none exist
+			aux.range(i,i+1);	// set range
+			aux.exist(false);	//dont exist
+		}else{
+			value = value/count;  //get the avg of sum of values
+			aux.set(i,i+1,value); // set range and value
+		}
+		sAvg_ + aux;
 	}
 }
 Sensor& SensorNet::sensorAvg(){
@@ -84,7 +85,6 @@ std::istream& operator>>(std::istream& is,SensorNet& sn){
 	istringstream lineStr;
 	Sensor sensorAux;
 	Package pkg;
-	
 	// parseo de la primera linea (nombres)
 	getline(is,line);						//get line
 	lineStr.str(line);						// stream it
@@ -92,7 +92,6 @@ std::istream& operator>>(std::istream& is,SensorNet& sn){
 		sensorAux = token;					// set name to aux sensor
 		sn.sensors_.push_back(sensorAux);		// push to array
 	}
-
 	// parse data
 	size_t sampleCount = 0;		// set sample count to 0
 	while(getline(is,line)){	// while lines
@@ -100,20 +99,29 @@ std::istream& operator>>(std::istream& is,SensorNet& sn){
 		lineStr.clear();
 		lineStr.str(line);
 		while(getline(lineStr,token,',')){	//while comma separated values
-			pkg.clear();					// clear pkg
-			if (token.empty()){				// if no data
+			stringstream tokenStr;
+			tokenStr.str(token);
+			double num;
+			pkg.clear();
+			if (token.empty()){	 // if no data
 				pkg.range(sampleCount,sampleCount+1);		// only set range
-			}else{
+			}else if(tokenStr >> num){ // if good number
 				pkg.set(sampleCount,sampleCount+1,atof(token.c_str()));	// set range and value
+			}else{ //if no number (bad character)
+				pkg.range(sampleCount,sampleCount+1);		// only set range
 			}
 			sn.sensors_[sensorCount] + pkg;
 			sensorCount++;
 		}
+		if(sensorCount == sn.size()-1){ // case string end with comma 
+			pkg.clear();			// clear pkg
+			pkg.range(sampleCount,sampleCount+1);		// only set range
+			sn.sensors_[sensorCount] + pkg;
+		}
 	sampleCount++;
 	}
 	sn.createSAvg();
-	cout << "Segment trees builded succesfully" << endl;
-	
 	return is;
+	
 }
 

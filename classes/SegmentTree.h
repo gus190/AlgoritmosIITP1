@@ -38,8 +38,6 @@ public:
 	
 	Package& build(const size_t&); //create all parent nodes (recursive)
 	
-	void build(); //build st from scratch with the leaves added
-	
 	Package& leaf(const size_t&); //return leaf (can be done as operator[])
 	
 	void printLeaves(std::ostream&); // print leaves

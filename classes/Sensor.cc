@@ -39,13 +39,7 @@ void Sensor::clear(){
 	name_ = " ";
 	data_.clear();
 }
-void Sensor::buildST(){
-	// Build st from array
-	data_.build();
-}
-void Sensor::printTree(){
-	cout << data_;
-}
+
 //-- Native operations -- 
 Sensor& Sensor::operator=(const string& name){
 	name_ = name;
@@ -64,10 +58,12 @@ bool Sensor :: operator==(const string& str){
 	return name_ == str;
 }
 
-
-
 Package Sensor::query(const size_t& node,const Range& rg){
 	Package ans;
+	if(!data_.exist()){
+		ans.clear();
+		return ans;
+	}
 	if(!data_[node].range().intersects(rg)){ // if node doesnt intersect range
 		ans.clear();
 		ans.range(data_[node].range());
@@ -83,14 +79,6 @@ Package Sensor::query(const size_t& node,const Range& rg){
 	} else { // if doesnt have children, return node
 		return data_[node]; 
 	}
-   // if the range of the node is within l and r
-        // return value in the node
-   // else if the range of the node is completely outside l and r
-        // return 0
-   // else
-    // return getSum(node's left child, l, r) + 
-           // getSum(node's right child, l, r)
-// }
 }
 
 
@@ -100,10 +88,8 @@ std::ostream& operator<<(std::ostream& os,Sensor& sensor){
 	// Output stream
 	os << "Sensor name: " << sensor.name() << endl;
 	os << "Data:" << endl;
-	os << sensor.data_;
-	//sensor.data_.printLeaves(os);
-	os << endl;
-	os << "Samples: " << sensor.size() << endl;
+	//os << sensor.data_; // to print entire tree
+	sensor.data_.printLeaves(os); // to print leaves
 	return os;
 }
 

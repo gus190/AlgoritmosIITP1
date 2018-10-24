@@ -85,7 +85,6 @@ void SegmentTree::expand(){
 		st[nodes_-leaves_+i].range(i,i+1);
 	}
 	st_ = st;
-	this->build(0); //rebuild tree
 	return;
 }
 Package& SegmentTree::build(const size_t& node){ 
@@ -96,44 +95,6 @@ Package& SegmentTree::build(const size_t& node){
 		st_[node] + build(rChild(node)); // merge childs in father
 	}
 	return st_[node];
-}
-void SegmentTree::build(){
-	// build st
-	
-	// Create auxiliary array with samples
-	Array<Package> arr;
-	
-	for(int i=0;i<samples_;i++){
-		arr.push_back(st_[nodes_-samples_+i]);
-	}
-	
-	// Build tree from auxiliary array
-	if (arr.size() == 0){ 
-		exist_ = false;
-		return;
-	}
-	
-	exist_ = true;
-	
-	// Set variables
-	height_++; //height of the tree
-	leaves_ = (size_t)(pow(2,height_));	// total size of the tree
-	nodes_ = 2*leaves_-1;		//number of nodes
-
-	// Create the array for the st
-	Array<Package> aux(nodes_); 
-	st_ = aux;
-	
-	// Load array in last part of st
-	for(size_t i = 0; i<arr.size(); i++){ // copy the array in the right location
-		st_[nodes_-leaves_+i] = arr[i];
-	}
-	for(size_t i = arr.size();i<leaves_;i++){ // fill the final empty elements of array with their range
-		st_[nodes_-leaves_+i].range(i,i+1);
-	}
-	
-	// Build all the tree
-	this->build(0);
 }
 
 Package& SegmentTree::leaf(const size_t& leafIndex){

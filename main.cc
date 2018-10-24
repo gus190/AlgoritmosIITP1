@@ -80,19 +80,16 @@ int main(int argc, char * const argv[]){
 	// Input parse
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
-	cout << "Input parse complete" << endl;
 	
 	// Data parse
 	SensorNet sensors;
 	*idss >> sensors;
-	cout << "Data parse complete" << endl;
 	
 	//cout << sensors << endl; -- debug
 	
 	// Query parse and process
 	Query query;
 	query.process(*iss,sensors,*oss);
-	cout << "Query process complete" << endl;
 	
 	return 0;
 }
