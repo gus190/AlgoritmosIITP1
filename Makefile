@@ -114,22 +114,22 @@ test-files: main
 	@echo Testing data cases ...
 	@echo Testing practice data...
 	@./exec/tp1 -d files/testcases/practice.data -i files/testcases/practice.query -o files/testcases/practice.out
-	@diff -b files/testCases/practice.ref files/testCases/practice.out
+	@diff -b files/testcases/practice.ref files/testcases/practice.out
 	@echo Done.
 	
 	@echo Testing justNames data...
 	@./exec/tp1 -d files/testcases/justNames.data -i files/testcases/justNames.query -o files/testcases/justNames.out
-	@diff -b files/testCases/justNames.ref files/testCases/justNames.out
+	@diff -b files/testcases/justNames.ref files/testcases/justNames.out
 	@echo Done.
 	
 	@echo Testing emptySamples data...
 	@./exec/tp1 -d files/testcases/emptySamples.data -i files/testcases/emptySamples.query -o files/testcases/emptySamples.out
-	@diff -b files/testCases/emptySamples.ref files/testCases/emptySamples.out
+	@diff -b files/testcases/emptySamples.ref files/testcases/emptySamples.out
 	@echo Done.
 	
 	@echo Testing emptyCases data...
 	@./exec/tp1 -d files/testcases/emptyCases.data -i files/testcases/emptyCases.query -o files/testcases/emptyCases.out
-	@diff -b files/testCases/emptyCases.ref files/testCases/emptyCases.out
+	@diff -b files/testcases/emptyCases.ref files/testcases/emptyCases.out
 	@echo Done.
 	@echo All files tested.
 
