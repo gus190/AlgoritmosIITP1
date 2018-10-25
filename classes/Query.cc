@@ -63,7 +63,7 @@ void Query::clear(){
 	name_.clear();
 } 
 void Query::process(std::istream& is,SensorNet& sn,std::ostream& os){
-	//variables
+	// Variables
 	string line,name;
 	int pos;
 	size_t min,max;
@@ -76,39 +76,39 @@ void Query::process(std::istream& is,SensorNet& sn,std::ostream& os){
 		istringstream lineStr;
 		lineStr.str(line);
 		
-		// read name
+		// Read name
 		getline(lineStr,name,',');
-		// read min and max range
+		// Read min and max range
 		if(lineStr >> rg_){
 			good = true;	
 		}else{
 			good = false;
 		}
-		if(good){ // if good parse, validate ranges
+		if(good){ // If good parse, validate ranges
 			if(rg_.empty()){
 				os << "BAD QUERY" << endl;
 				continue;
 			}
-		}else{ 		// if bad parse 
+		}else{ 		// If bad parse 
 			os << "BAD QUERY" << endl;
 			continue;
 		}
-		// if empty name
+		// If empty name
 		if(name.empty()){		
-			// query avg sensor;
+			// Query avg sensor;
 			ans = sn.sensorAvg().query(0,rg_);
 		}else{
-			// search name in sensor network
+			// Search name in sensor network
 			pos = sn.search(name);
-			//if didnt find it 
+			// If didnt find it 
 			if(pos == -1){
 				os << "UNKNOWN ID" << endl;
 				continue;
 			}
-			// if found it, query the sensor
+			// If found it, query the sensor
 			ans = sn[pos].query(0,rg_);
 		}
-		if(!ans.exist()){
+		if(!ans.exist()){  // If answer dont exist, no data in range
 			os << "NO DATA" << endl;
 		}else{
 			ans.printStd(os);

@@ -28,9 +28,9 @@ public:
 	
 	// Metods
 	void clear();
-	void buildTree();
-	Package query(const size_t&,const Range&);
-	void printTree();
+	void buildTree(); // Build the parents
+	Package query(const size_t&,const Range&); // Query from range of index
+	void printTree(); //Print the tree
 	
 	// Native operations
 	Sensor& operator=(const string&);

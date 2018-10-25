@@ -65,23 +65,23 @@ size_t SegmentTree::rChild(const size_t& node)const{
 void SegmentTree::expand(){
 	Array<Package> arr;
 	
-	// load samples into auxiliary array
+	// Load samples into auxiliary array
 	for(int i=0;i<samples_;i++){
 		arr.push_back(st_[nodes_-samples_+i]);
 	}
 	
-	//set new sizes
+	// Set new sizes
 	height_++; //height of the tree
-	leaves_ = (size_t)(pow(2,height_));	// total size of the tree
-	nodes_ = 2*leaves_-1;		//number of nodes
+	leaves_ = (size_t)(pow(2,height_));	// Total size of the tree
+	nodes_ = 2*leaves_-1;		// Number of nodes
 	
-	//create new st array
+	// Create new st array
 	Array<Package> st(nodes_);
 	// Load samples (leaves)
-	for(size_t i = 0; i<arr.size(); i++){ // copy the array in the right location
+	for(size_t i = 0; i<arr.size(); i++){ // Copy the array in the right location
 		st[nodes_-leaves_+i] = arr[i];
 	}
-	for(size_t i = arr.size();i<leaves_;i++){ // fill the final empty elements of array with their range
+	for(size_t i = arr.size();i<leaves_;i++){ // Fill the final empty elements of array with their range
 		st[nodes_-leaves_+i].range(i,i+1);
 	}
 	st_ = st;
@@ -92,7 +92,7 @@ Package& SegmentTree::build(const size_t& node){
 	// Recursive build, call until element with no childs,return node
 	if(haveChild(node)){
 		st_[node] = build(lChild(node));
-		st_[node] + build(rChild(node)); // merge childs in father
+		st_[node] + build(rChild(node)); // Merge childs in father
 	}
 	return st_[node];
 }
@@ -104,10 +104,11 @@ void SegmentTree::build(){
 }
 
 Package& SegmentTree::leaf(const size_t& leafIndex){
+	// Return sample (leaf)
 	return st_[nodes_ - leaves_ + leafIndex];
 }
 void SegmentTree::printLeaves(std::ostream& os){
-	// print leaves
+	// Print samples (leaves)
 	for(int i = nodes_-leaves_;i<nodes_;i++){
 		os << st_[i] << ',';
 	}
@@ -122,27 +123,28 @@ SegmentTree& SegmentTree::operator=(const SegmentTree& st){
 	return *this;
 }
 SegmentTree& SegmentTree::operator+(const Package& data){
-	//push to segment tree
-	if(leaves_ == 0){ //first time
+	// Push to segment tree
+	if(leaves_ == 0){ // First time
 		st_.push_back(data);
 		nodes_++;
 		leaves_++;
 		samples_++;
 		exist_ = true;
 		return *this;
-	}else if(leaves_ == samples_){ //if leaves = samples (no more free space in st)
-		this->expand();
+	}else if(leaves_ == samples_){ // If leaves = samples (no more free space in st)
+		this->expand(); // Expand the tree
 	}
-	st_[nodes_-leaves_+samples_] = data;	// put data in place
-	samples_++;		//  incerment samples size
-	//this->build(0);	// rebuild the parents
+	st_[nodes_-leaves_+samples_] = data;	// Put data in place
+	samples_++;		//  Incerment samples size
 	return *this;
 }
 Package& SegmentTree::operator[](const size_t& i){
+	// Go to node
 	return st_[i];
 }
 // -- Stream operators -- 
 std::ostream & operator<< (std::ostream& os,const SegmentTree& st){
+	// Print full segment tree
 	if(st.exist_ == false){
 		os << "empty st" << endl;
 	}else{

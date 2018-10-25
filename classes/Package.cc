@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <classes/Package.h>
 
+// They can be as big as we want to
 #define INFPOS 1000000
 #define INFNEG -1000000
 
@@ -92,7 +93,8 @@ void Package::count(const size_t& data){
 void Package::exist(const bool& data){
 	exist_ = data;
 }
-void Package::set(const Range& rg,const double& data){ // Range and data with count 1;
+void Package::set(const Range& rg,const double& data){ 
+	// Range and data with count 1;
 	rg_ = rg;
 	min_ = data;
 	max_ = data;
@@ -100,7 +102,8 @@ void Package::set(const Range& rg,const double& data){ // Range and data with co
 	count_ = 1;
 	exist_ = true;
 }
-void Package::set(const size_t& minrg,const size_t& maxrg,const double& data){ // Range and data with count 1;
+void Package::set(const size_t& minrg,const size_t& maxrg,const double& data){ 
+	// Range and data with count 1;
 	rg_.range(minrg,maxrg);
 	min_ = data;
 	max_ = data;
@@ -110,6 +113,7 @@ void Package::set(const size_t& minrg,const size_t& maxrg,const double& data){ /
 }
 //-- Metods --
 void Package::clear(){
+	//Clear package
 	rg_.clear();
 	min_=INFPOS;
 	max_=INFNEG;
@@ -118,6 +122,7 @@ void Package::clear(){
 	count_=0;
 }
 void Package::printStd(ostream& os){
+	// Print the standar way
 	if(count_ == 0){
 		os << "NO DATA";
 	}else{
@@ -128,26 +133,28 @@ void Package::printStd(ostream& os){
 
 //-- Native operators --
 Package& Package::operator+(const Package& pkg){
-	//exist
+	// Union of two packages
+	// Exist
 	exist_ = exist_ || pkg.exist_;
-	//min
-	if(min_ > pkg.min_ && pkg.exist_ == true){ //if min is in pkg and exist
+	// Min
+	if(min_ > pkg.min_ && pkg.exist_ == true){ // If min is in pkg and exist
 		min_ = pkg.min_;
 	}
-	//max
-	if(max_ < pkg.max_ && pkg.exist_ == true){ //if min is in pkg and exist
+	// Max
+	if(max_ < pkg.max_ && pkg.exist_ == true){ //If min is in pkg and exist
 		max_ = pkg.max_;
 	}
-	//avg
-	if(exist_ == true){ // si existe, promedio ponderado
+	// Avg
+	if(exist_ == true){ // Si exist, average
 		avg_=(avg_*count_ + pkg.avg_*pkg.count_)/(count_+pkg.count_);
 	}
-	//range
-	rg_ + pkg.rg_; //union
+	// Range
+	rg_ + pkg.rg_; // Union
 	//count
 	count_+=pkg.count_;
 }
 Package& Package::operator=(const Package& pkg){
+	// Assignation
 	exist_ = pkg.exist_;
 	max_ = pkg.max_;
 	min_ = pkg.min_;
@@ -159,6 +166,7 @@ Package& Package::operator=(const Package& pkg){
 
 //-- Stream operators -- 
 std::ostream& operator<<(std::ostream& os,const Package& pkg){
+	// Print Package
 	os << '{' << pkg.rg_ << ',';
 	if(!pkg.exist_){
 	os << "noExist"  << '}';

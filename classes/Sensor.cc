@@ -64,23 +64,23 @@ bool Sensor :: operator==(const string& str){
 
 Package Sensor::query(const size_t& node,const Range& rg){
 	Package ans;
-	if(!data_.exist()){
+	if(!data_.exist()){ // If no exist, return empty package
 		ans.clear();
 		return ans;
 	}
-	if(!data_[node].range().intersects(rg)){ // if node doesnt intersect range
+	if(!data_[node].range().intersects(rg)){ // If node doesnt intersect range
 		ans.clear();
 		ans.range(data_[node].range());
-		return ans;		// return empty package with propper range
-	}else if(data_[node].range().isInside(rg)){ // if node range is inside range
-		return data_[node];	//return complete node
+		return ans;		// Return empty package with propper range
+	}else if(data_[node].range().isInside(rg)){ // If node range is inside range
+		return data_[node];	// Return complete node
 		
-	}else if(data_.haveChild(node)){	// if intersects and have children
-		ans = query(data_.lChild(node),rg);	// return child1+child2
+	}else if(data_.haveChild(node)){	// If intersects and have children
+		ans = query(data_.lChild(node),rg);	// Return child1+child2
 		ans + query(data_.rChild(node),rg);
 		return ans;
 		
-	} else { // if doesnt have children, return node
+	} else { // If doesnt have children, return node
 		return data_[node]; 
 	}
 }

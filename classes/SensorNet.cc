@@ -25,7 +25,8 @@ void SensorNet::clear(){
 	sensors_.clear();
 	sAvg_.clear();
 }
-size_t SensorNet::search(const string& name){
+size_t SensorNet::search(const string& name){ 
+	//linear search
 	if(sensors_.size()==0)
 		return -1;
 	for(size_t i=0;i<sensors_.size();++i){
@@ -35,6 +36,7 @@ size_t SensorNet::search(const string& name){
 	return -1;
 }
 void SensorNet::createSAvg(){
+	// Average sensor
 	sAvg_.clear();
 	if(sensors_[0].size() == 0){
 		return;
@@ -62,13 +64,16 @@ void SensorNet::createSAvg(){
 	sAvg_.buildTree();
 }
 Sensor& SensorNet::sensorAvg(){
+	//returns sensor average;
 	return sAvg_;
 }
 //-- Native operators -- 
 SensorNet& SensorNet::operator+(const Sensor& s){
+	// Sum used as push_back 
 	sensors_.push_back(s);
 }
 SensorNet& SensorNet::operator=(const SensorNet& s){
+	// Assignation
 	sensors_ = s.sensors_;
 	sAvg_ = s.sAvg_;
 }
@@ -83,43 +88,43 @@ std::ostream& operator<<(std::ostream& os,SensorNet& sn){
 	return os;
 }
 std::istream& operator>>(std::istream& is,SensorNet& sn){
-	// parse input
-	// variables utilizadas
+	// Input parse
+	// variables
 	string line,token;
 	istringstream lineStr;
 	Sensor sensorAux;
 	Package pkg;
-	// parseo de la primera linea (nombres)
-
-	getline(is,line);						//get line
-	lineStr.str(line);						// stream it
-	while(getline(lineStr,token,',')){		// get comma separated values
-		sensorAux = token;					// set name to aux sensor
-		sn.sensors_.push_back(sensorAux);		// push to array
+	
+	// First line (names)
+	getline(is,line);					// Get line
+	lineStr.str(line);					// Stream it
+	while(getline(lineStr,token,',')){	// While comma separated values
+		sensorAux = token;					// Set name to aux sensor
+		sn + sensorAux;						// Push sensor to sensorNetwork array
 	}
 	
 	// parse data
-	size_t sampleCount = 0;		// set sample count to 0
-	while(getline(is,line)){	// while lines
-		size_t sensorCount = 0; // set sensor count to 0
+	size_t sampleCount = 0;		// Set sample count to 0
+	while(getline(is,line)){	// While lines
+		size_t sensorCount = 0; // Set sensor count to 0
 		lineStr.clear();
 		lineStr.str(line);
-		while(getline(lineStr,token,',')){	//while comma separated values
+		while(getline(lineStr,token,',')){	// While comma separated values
 			stringstream tokenStr;
 			tokenStr.str(token);
 			double num;
 			pkg.clear();
-			if (token.empty()){	 // if no data
-				pkg.range(sampleCount,sampleCount+1);		// only set range
-			}else if(tokenStr >> num){ // if good number
-				pkg.set(sampleCount,sampleCount+1,atof(token.c_str()));	// set range and value
-			}else{ //if no number (bad character)
-				pkg.range(sampleCount,sampleCount+1);		// only set range
+			if (token.empty()){	 // If no data
+				pkg.range(sampleCount,sampleCount+1);		// Only set range
+			}else if(tokenStr >> num){ // If good number
+				pkg.set(sampleCount,sampleCount+1,num);	// Set range and value
+			}else{ // If no number (bad character)
+				pkg.range(sampleCount,sampleCount+1);		// Only set range
 			}
 			sn.sensors_[sensorCount] + pkg;
 			sensorCount++;
 		}
-		if(sensorCount == sn.size()-1){ // case string end with comma 
+		if(sensorCount == sn.size()-1){ // Case string end with comma (leaves while early if ends in ,\0\n
 			pkg.clear();			// clear pkg
 			pkg.range(sampleCount,sampleCount+1);		// only set range
 			sn.sensors_[sensorCount] + pkg;
@@ -127,10 +132,10 @@ std::istream& operator>>(std::istream& is,SensorNet& sn){
 	sampleCount++;
 	}
 	
-	for(size_t i = 0; i < sn.size();i++){
+	for(size_t i = 0; i < sn.size();i++){ // Build all the trees in network
 		sn[i].buildTree();
 	}
-	sn.createSAvg();
+	sn.createSAvg(); // Create average sensor
 	return is;
 	
 }

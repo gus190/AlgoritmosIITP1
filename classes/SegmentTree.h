@@ -14,8 +14,7 @@ private:
 	bool exist_;
 	Array<Package> st_;
 	size_t samples_,leaves_,height_,nodes_; //leaves size, height, nodes size(total size)
-	void expand();
-	
+	void expand(); // expand the tree
 public:
 	// Constructors / Destructor
 	SegmentTree(); // Empty
@@ -31,27 +30,23 @@ public:
 	
 	// Metods
 	void clear(); //clear
+	bool haveChild(const size_t&)const; // Ask if have children
+	size_t lChild(const size_t&)const; // Index of 1st child
+	size_t rChild(const size_t&)const; // Index of 2nd child
 	
-	bool haveChild(const size_t&)const; // ask if have children
-	size_t lChild(const size_t&)const; // index of 1st child
-	size_t rChild(const size_t&)const; // index of 2nd child
+	Package& build(const size_t&); // Create all parent nodes (recursive)
+	void build(); // Build tree
 	
-	Package& build(const size_t&); //create all parent nodes (recursive)
-	void build(); //build tree from leaves
-	
-	Package& leaf(const size_t&); //return leaf (can be done as operator[])
-	
-	void printLeaves(std::ostream&); // print leaves
+	Package& leaf(const size_t&); // Return leaf 
+	void printLeaves(std::ostream&); // Print leaves
 	
 	// Native operators
-	SegmentTree& operator=(const SegmentTree&); //asignation
-	SegmentTree& operator+(const Package&); //push to array
-	Package& operator[](const size_t&); //push to array
+	SegmentTree& operator=(const SegmentTree&); // Asignation
+	SegmentTree& operator+(const Package&); // Push to array
+	Package& operator[](const size_t&); // Return node
 	
 	// Stream operators
-	friend std::ostream& operator<<(std::ostream&,const SegmentTree&);
-
-
+	friend std::ostream& operator<<(std::ostream&,const SegmentTree&); // Print full array st
 };
 
 #endif

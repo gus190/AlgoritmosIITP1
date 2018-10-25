@@ -77,9 +77,11 @@ static void opt_help(string const &arg){
 // ---- main ---- //
 int main(int argc, char * const argv[]){
 	clock_t tstart,tend;
+	
 	// Input parse
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
+	
 	// Data parse
 	SensorNet sensors;
 	tstart = clock();
