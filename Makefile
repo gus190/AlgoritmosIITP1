@@ -3,7 +3,7 @@ CXXFLAGS = -I. $(CXXARGS)
 LDFLAGS  =
 CXX      = c++
 
-all: clean main gens tests 
+all: clean main gens tests test-classes test-valgrind test-files
 #test-classes test-valgrind test-data
 
 #main
@@ -90,21 +90,25 @@ clean:
 
 test-classes: 
 	@echo Testing classes ...
-	./exec/test-rg <files/tests/test-rg.in  >files/tests/test-rg.out
-	diff -b files/tests/test-rg.out files/tests/test-rg.ref
 	
-	./exec/test-pkg <files/tests/test-pkg.in  >files/tests/test-pkg.out
-	diff -b files/tests/test-pkg.out files/tests/test-pkg.ref
+	@./exec/test-rg <files/testclasses/test-rg.in  >files/testclasses/test-rg.out
+	@diff -b files/testclasses/test-rg.out files/testclasses/test-rg.ref
 	
-	./exec/test-st <files/tests/test-st.in  >files/tests/test-st.out
-	diff -b files/tests/test-st.out files/tests/test-st.ref
+	@./exec/test-pkg <files/testclasses/test-pkg.in  >files/testclasses/test-pkg.out
+	@diff -b files/testclasses/test-pkg.out files/testclasses/test-pkg.ref
+	
+	@./exec/test-st <files/testclasses/test-st.in  >files/testclasses/test-st.out
+	@diff -b files/testclasses/test-st.out files/testclasses/test-st.ref
+	
+	@./exec/test-sensor <files/testclasses/test-sensor.in  >files/testclasses/test-sensor.out
+	@diff -b files/testclasses/test-sensor.out files/testclasses/test-sensor.ref
 	
 	@echo Classes testing done.
 
 test-valgrind:
 	@echo testing valgrind ... 
-	valgrind --leak-check=full ./exec/tp1 -i files/queryCatedra.csv -d files/dataCatedra.csv -o files/output.csv
-	@echo valgrind test done.
+	@valgrind --leak-check=full --log-file="files/valgrind.log" ./exec/tp1 -i files/testcases/practice.query -d files/testcases/practice.data -o files/testcases/practice.out
+	@echo valgrind test done in files/valgrind.log.
 
 test-files: main
 	@echo Testing data cases ...

@@ -36,7 +36,7 @@ int main(){
 				break;
 			case 'P': 
 			// print st
-				cout << st << endl;
+				cout << st;
 				break;
 			default:
 				cout << "error: unknown command (";

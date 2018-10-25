@@ -76,20 +76,28 @@ static void opt_help(string const &arg){
 
 // ---- main ---- //
 int main(int argc, char * const argv[]){
-
+	clock_t tstart,tend;
+	clock_t telapsed;
 	// Input parse
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
 	
 	// Data parse
 	SensorNet sensors;
+	tstart = clock();
 	*idss >> sensors;
+	tend = clock();
+	telapsed =(tend-tstart);
+	cout << telapsed << endl;
 	
 	//cout << sensors << endl; -- debug
 	
 	// Query parse and process
 	Query query;
+	tstart = clock();
 	query.process(*iss,sensors,*oss);
-	
+	tend = clock();
+	telapsed =(tend-tstart);
+	cout << tstart << ',' << tend << endl;
 	return 0;
 }
