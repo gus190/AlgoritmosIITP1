@@ -145,7 +145,8 @@ std::istream& operator>>(std::istream& is,Range& range){
 		return is;
 	}else{
 		range.clear();
-		cout << "Bad range parse." << endl;
+		//cout << "Bad range parse." << endl;
+		return is;
 	}
 	return is;
 }

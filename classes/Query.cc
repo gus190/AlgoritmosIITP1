@@ -78,7 +78,6 @@ void Query::process(std::istream& is,SensorNet& sn,std::ostream& os){
 		
 		// read name
 		getline(lineStr,name,',');
-		
 		// read min and max range
 		if(lineStr >> rg_){
 			good = true;	
