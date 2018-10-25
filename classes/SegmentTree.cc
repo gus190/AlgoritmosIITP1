@@ -97,6 +97,12 @@ Package& SegmentTree::build(const size_t& node){
 	return st_[node];
 }
 
+void SegmentTree::build(){
+	if(st_.size() != 0)
+		this->build(0);
+	return;
+}
+
 Package& SegmentTree::leaf(const size_t& leafIndex){
 	return st_[nodes_ - leaves_ + leafIndex];
 }
@@ -129,7 +135,7 @@ SegmentTree& SegmentTree::operator+(const Package& data){
 	}
 	st_[nodes_-leaves_+samples_] = data;	// put data in place
 	samples_++;		//  incerment samples size
-	this->build(0);	// rebuild the parents
+	//this->build(0);	// rebuild the parents
 	return *this;
 }
 Package& SegmentTree::operator[](const size_t& i){

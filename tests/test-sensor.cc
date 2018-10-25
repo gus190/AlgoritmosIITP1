@@ -26,6 +26,7 @@ int main(){
 						break;
 					}
 				}
+				s.buildTree();
 				break;
 			case 'C': 
 			// clear st

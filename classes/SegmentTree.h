@@ -37,6 +37,7 @@ public:
 	size_t rChild(const size_t&)const; // index of 2nd child
 	
 	Package& build(const size_t&); //create all parent nodes (recursive)
+	void build(); //build tree from leaves
 	
 	Package& leaf(const size_t&); //return leaf (can be done as operator[])
 	

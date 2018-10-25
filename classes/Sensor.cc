@@ -38,6 +38,10 @@ size_t  Sensor::size()const{
 void Sensor::clear(){
 	name_ = " ";
 	data_.clear();
+	return;
+}
+void Sensor::buildTree(){
+	data_.build();
 }
 
 //-- Native operations -- 

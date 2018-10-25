@@ -36,6 +36,9 @@ size_t SensorNet::search(const string& name){
 }
 void SensorNet::createSAvg(){
 	sAvg_.clear();
+	if(sensors_[0].size() == 0){
+		return;
+	}
 	for (size_t i = 0; i < sensors_[0].size(); i++){ // for each sample time
 		double value = 0;
 		int count = 0;
@@ -56,6 +59,7 @@ void SensorNet::createSAvg(){
 		}
 		sAvg_ + aux;
 	}
+	sAvg_.buildTree();
 }
 Sensor& SensorNet::sensorAvg(){
 	return sAvg_;
@@ -86,12 +90,14 @@ std::istream& operator>>(std::istream& is,SensorNet& sn){
 	Sensor sensorAux;
 	Package pkg;
 	// parseo de la primera linea (nombres)
+
 	getline(is,line);						//get line
 	lineStr.str(line);						// stream it
 	while(getline(lineStr,token,',')){		// get comma separated values
 		sensorAux = token;					// set name to aux sensor
 		sn.sensors_.push_back(sensorAux);		// push to array
 	}
+	
 	// parse data
 	size_t sampleCount = 0;		// set sample count to 0
 	while(getline(is,line)){	// while lines
@@ -119,6 +125,10 @@ std::istream& operator>>(std::istream& is,SensorNet& sn){
 			sn.sensors_[sensorCount] + pkg;
 		}
 	sampleCount++;
+	}
+	
+	for(size_t i = 0; i < sn.size();i++){
+		sn[i].buildTree();
 	}
 	sn.createSAvg();
 	return is;

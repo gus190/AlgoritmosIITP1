@@ -10,6 +10,8 @@ using namespace std;
 class Sensor {
 	string name_;
 	SegmentTree data_;
+	Array<Package> aux;
+	
 public:
 	// Constructors / Destructor
 	Sensor(); // Empty
@@ -26,6 +28,7 @@ public:
 	
 	// Metods
 	void clear();
+	void buildTree();
 	Package query(const size_t&,const Range&);
 	void printTree();
 	

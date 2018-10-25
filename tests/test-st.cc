@@ -27,6 +27,7 @@ int main(){
 						st.clear();
 						break;
 					}
+					st.build();
 				}
 				break;
 			case 'C': 

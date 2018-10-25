@@ -80,7 +80,6 @@ int main(int argc, char * const argv[]){
 	// Input parse
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
-	
 	// Data parse
 	SensorNet sensors;
 	tstart = clock();
